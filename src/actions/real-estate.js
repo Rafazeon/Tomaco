@@ -24,7 +24,8 @@ export function createRealEstate(formData) {
     uf,
     city,
     neighborhood,
-    price
+    price,
+    imobi
   } = formData;
 
   return dispatch => new Promise(async (resolve, reject) => {
@@ -50,7 +51,8 @@ export function createRealEstate(formData) {
             uf,
             city,
             neighborhood,
-            price
+            price,
+            imobi
           }).then(() => statusMessage(dispatch, 'loading', false)
           .then(resolve))
       .catch(reject);

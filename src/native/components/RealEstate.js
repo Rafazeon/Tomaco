@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FlatList, TouchableOpacity, RefreshControl, Image, StyleSheet } from 'react-native';
+import { FlatList, TouchableOpacity, RefreshControl, Image, StyleSheet, AsyncStorage } from 'react-native';
 import { Container, Content, Card, CardItem, Body, Text, Button, View } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import Loading from './Loading';
@@ -18,7 +18,9 @@ const RealEstate = ({
   loading,
   realestate,
   reFetch,
-  filters
+  filters,
+  imobi,
+  params
 }) => {
   // Loading
   if (loading) return <Loading />;
@@ -31,7 +33,18 @@ const RealEstate = ({
   const onPress = item => Actions.imobi({ match: { params: { id: String(item.id) } } });
   const onEdit = item => Actions.imobiEdit({ match: { params: { id: String(item.id) } } });
   const onDelete = item => Actions.imobiDelete({ match: { params: { id: String(item.id) } } });
-  const types = filters.types + ' ' + filters.goal
+  const types = filters.types + ' ' + filters.goal;
+
+  const getImobiUser = item => {
+    if(params) {
+      return item.filter((home) => {
+        return home.imobi == params
+      })
+    }else{
+      return item
+    }
+  }
+
   return (
     <Container>
       <Content>
@@ -41,7 +54,7 @@ const RealEstate = ({
 
         <FlatList
           numColumns={1}
-          data={realestate}
+          data={getImobiUser(realestate)}
           renderItem={({ item }) => (
             <Card transparent style={{ 
                   borderWidth: 0,
@@ -58,9 +71,10 @@ const RealEstate = ({
                   marginTop: 5 }}>
             
               <View>
+              
               <Spacer size={10} />
-              <Text style={{fontWeight: '800', position: 'relative'}}>    {item.title}</Text>
-              {!!firebase.auth().currentUser ? 
+              
+              {!!firebase.auth().currentUser && imobi == item.imobi ? 
               <View style={{flex: 1, justifyContent: 'flex-start', flexDirection: 'row', padding: 15}}>    
                   <Icon name="pencil" style={{marginLeft: 20, fontSize: 13}}></Icon>
                   <Text onPress={() => onEdit(item)} style={{marginLeft: 5, fontSize: 13, position: 'relative', top: -3}}>Editar</Text>

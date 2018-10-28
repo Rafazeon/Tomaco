@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { getRealEstateWithFilters, setError, setRealEstate, getRealEstate } from '../actions/real-estate';
 import { getEmployee } from '../actions/member';
-import { getFavorite } from '../actions/favorite';
+import { createFavorite } from '../actions/favorite';
 
 class RealEstate extends Component {
   static propTypes = {
@@ -26,6 +26,32 @@ class RealEstate extends Component {
     match: null,
   }
   
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      imobiId: '',
+      color: ''
+    }
+
+    this.addFavorite = this.addFavorite.bind(this)
+  }
+
+  starColor() {
+    var favoriteItem = this.props.favoriteItem
+    var imobiId = this.state.imobiId ? this.state.imobiId : this.props.match.params.id
+    
+    favoriteItem.favorite.filter((item) => {
+        console.log(item.imobiId)
+        console.log(imobiId)
+      if(item.imobiId == imobiId && item.status == true) {
+        this.setState({color: 'red'})
+      }else{
+        this.setState({color: 'gray'})
+      }
+    }) 
+  }
+  
   componentDidMount = () => {     
     if(this.props.realestate.apply_filters === false) {
         this.props.getRealEstate()
@@ -33,7 +59,20 @@ class RealEstate extends Component {
         this.props.getRealEstateWithFilters()
     }
     this.props.getEmployee()
-    this.props.getFavorite()
+    this.starColor()
+  }
+
+  addFavorite(imobiId, status) {
+    this.setState({imobiId: imobiId})
+    const obj = {
+      userId: this.props.member.uid,
+      imobiId: imobiId,
+      email: this.props.member.email,
+      status: status
+    }
+    this.props.onFormFavorite(obj).then(response => {
+        this.starColor()
+    })
   }
   
   /**
@@ -44,9 +83,9 @@ class RealEstate extends Component {
   }
   
   render = () => {
-    const { Layout, realestate, filters, editrealestate, match, onFormSubmit, member, params } = this.props;
+    const { Layout, realestate, filters, editrealestate, match, onFormSubmit, member, params, favoriteItem } = this.props;
     const id = (match && match.params && match.params.id) ? match.params.id : null;
-    
+
     return (
       <Layout
         realestateId={id}
@@ -59,6 +98,9 @@ class RealEstate extends Component {
         filters={filters}
         imobi={member.imobi}
         params={params}
+        addFavorite={this.addFavorite}
+        favoriteItem={favoriteItem}
+        color={this.state.color}
       />
     );
   }
@@ -68,6 +110,7 @@ const mapStateToProps = state => (
   { filters: state.realestate.filters,
     realestate: state.realestate || {},
     member: state.member || {},
+    favoriteItem: state.favorite || {}
   }
 );
 
@@ -77,7 +120,7 @@ const mapDispatchToProps = {
   setError,
   onFormSubmit: setRealEstate,
   getEmployee,
-  getFavorite
+  onFormFavorite: createFavorite
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RealEstate);

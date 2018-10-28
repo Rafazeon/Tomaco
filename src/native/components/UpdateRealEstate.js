@@ -74,6 +74,7 @@ class UpdateRealEstate extends React.Component {
       city: props.realestate.city || '',
       neighborhood: props.realestate.neighborhood || '',
       price: props.realestate.price || '',
+      imobi: props.imobi || '',
       load: false,
       dp: null
     };
@@ -107,7 +108,7 @@ class UpdateRealEstate extends React.Component {
     if(this.props.Create) {
       this.props.onFormSubmit(newRealEstate)
       .then(this.setState({id: this.state.id, title: '', description: '', bedrooms: '', bathrooms: '', types: '', suites: '', vacancies: '', goal: '', area: '', price: '', cep: '', address: '',
-      number: '', complement: '', uf: '', city: '', neighborhood: '', images: this.state.images})) 
+      number: '', complement: '', uf: '', city: '', neighborhood: '', images: this.state.images, imobi: this.props.imobi})) 
       .then(Actions.realestate()) 
       .then(() => console.log('Real Estate Atualizado'))
       .catch(e => console.log(`Error: ${e}`));
@@ -128,7 +129,7 @@ class UpdateRealEstate extends React.Component {
           return response.data.map((item,i)=> 
             {item.id === RealEstateId ? this.setState({title: item.title, description: item.description, bedrooms: item.bedrooms.toString(), bathrooms: item.bathrooms.toString(), 
               types_goal: item.types_goal, images: item.images, suites: item.suites, vacancies: item.vacancies.toString(), area: item.area.toString(), price: item.price.toString(), 
-              cep: item.cep, address: item.address, number: item.number, complement: item.complement, uf: item.uf, city: item.city, neighborhood: item.neighborhood}) : ''} 
+              cep: item.cep, address: item.address, number: item.number, complement: item.complement, uf: item.uf, city: item.city, neighborhood: item.neighborhood, imobi: item.imobi}) : ''} 
           )       
         } else {
           reject(new Error('error'))

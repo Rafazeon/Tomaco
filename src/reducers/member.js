@@ -12,7 +12,7 @@ export default function userReducer(state = initialState, action) {
           error: null,
           uid: action.data.uid,
           email: action.data.email,
-          emailVerified: action.data.emailVerified,
+          emailVerified: action.data.emailVerified
         };
       }
       return initialState;
@@ -27,10 +27,12 @@ export default function userReducer(state = initialState, action) {
           lastName: action.data.lastName,
           signedUp: action.data.signedUp,
           role: action.data.role,
+          imobi: action.data.imobi
         };
       }
       return initialState;
     }
+
     case 'USER_ERROR': {
       if (action.data) {
         return {
@@ -44,6 +46,17 @@ export default function userReducer(state = initialState, action) {
     case 'USER_RESET': {
       return initialState;
     }
+
+    case 'GET_EMPLOYEE': {
+      if (action.data) {
+        return {
+          ...state,
+          user: action.data
+        };
+      }
+      return initialState;
+    }
+
     default:
       return state;
   }

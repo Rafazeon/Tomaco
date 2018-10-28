@@ -13,6 +13,9 @@ export function signUp(formData) {
     password2,
     firstName,
     lastName,
+    imobi,
+    image,
+    role
   } = formData;
 
   return dispatch => new Promise(async (resolve, reject) => {
@@ -35,6 +38,9 @@ export function signUp(formData) {
           FirebaseRef.child(`users/${res.uid}`).set({
             firstName,
             lastName,
+            imobi,
+            image,
+            role,
             signedUp: Firebase.database.ServerValue.TIMESTAMP,
             lastLoggedIn: Firebase.database.ServerValue.TIMESTAMP,
           }).then(() => statusMessage(dispatch, 'loading', false).then(resolve));
@@ -65,9 +71,11 @@ function getUserData(dispatch) {
     return dispatch({
       type: 'USER_DETAILS_UPDATE',
       data: userData,
-    });
+    }); 
   });
 }
+
+
 
 export function getMemberData() {
   if (Firebase === null) return () => new Promise(resolve => resolve());
@@ -90,7 +98,7 @@ export function getMemberData() {
 export function login(formData) {
   const {
     email,
-    password,
+    password
   } = formData;
 
   return dispatch => new Promise(async (resolve, reject) => {
@@ -121,7 +129,8 @@ export function login(formData) {
               }
 
               // Get User Data
-              getUserData(dispatch);
+              getUserData(dispatch)
+              
             }
 
             await statusMessage(dispatch, 'loading', false);
@@ -207,6 +216,20 @@ export function updateProfile(formData) {
         resolve();
       }).catch(reject);
   }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
+}
+
+export function getEmployee() {
+  if (Firebase === null) return () => new Promise(resolve => resolve());
+
+  return dispatch => new Promise(resolve => FirebaseRef.child('users')
+    .on('value', (snapshot) => {
+        const users = snapshot.val() || {};
+        const userslist = Object.values(users);
+        return resolve(dispatch({
+          type: 'GET_EMPLOYEE',
+          data: userslist
+        }));
+    })).catch(e => console.log(e)); 
 }
 
 /**

@@ -1,16 +1,17 @@
 import React from 'react';
-import { Scene, Tabs, Stack, Modal } from 'react-native-router-flux';
+import { Scene, Tabs, Stack, Drawer } from 'react-native-router-flux';
 import { Icon } from 'native-base';
 
 import DefaultProps from '../constants/navigation';
-import AppConfig from '../../constants/config';
 
 import RecipesContainer from '../../containers/Recipes';
-import RecipesComponent from '../components/Recipes';
 import RecipeViewComponent from '../components/Recipe';
 
 import SignUpContainer from '../../containers/SignUp';
 import SignUpComponent from '../components/SignUp';
+
+import SignUpUserContainer from '../../containers/SignUpUser';
+import SignUpUserComponent from '../components/SignUpUser';
 
 import LoginContainer from '../../containers/Login';
 import LoginComponent from '../components/Login';
@@ -26,6 +27,8 @@ import DeleteRealEstateContainer from '../../containers/DeleteRealEstate';
 
 import RealEstateContainer from '../../containers/RealEstate';
 import RealEstateComponent from '../components/RealEstate';
+
+import RealEstateViewContainer from '../../containers/RealEstateView';
 import RealEstateViewComponent from '../components/RealEstateView';
 
 
@@ -35,16 +38,30 @@ import UpdateRealEstateComponent from '../components/UpdateRealEstate';
 import MemberContainer from '../../containers/Member';
 import ProfileComponent from '../components/Profile';
 
-import AboutComponent from '../components/About';
-
 import FilterViewContainer from '../../containers/FilterView';
 import FilterViewComponent from '../components/FilterView';
+
+import ListEmployeeContainer from '../../containers/ListEmployee';
+import ListEmployeeComponent from '../components/ListEmployee';
+
+import SidebarComponent from '../components/Sidebar';
+
+import firebase from 'firebase'
 
 console.disableYellowBox = true;
 
 const Index = (
   <Stack key="home">
     <Scene hideNavBar key="home1">
+    <Drawer
+      key="drawer"
+        swipeEnabled
+        type="replace"
+        showLabel={false}
+        {...DefaultProps.tabProps}
+        drawerImage={require('../../images/menu.png')}
+        contentComponent={SidebarComponent}> 
+      
       <Tabs
         key="tabbar"
         swipeEnabled
@@ -94,6 +111,16 @@ const Index = (
             component={SignUpContainer}
             Layout={SignUpComponent}
           />
+
+          <Scene
+            back
+            key="signUpUser"
+            title="CRIAR CONTA"
+            {...DefaultProps.navbarProps}
+            component={SignUpUserContainer}
+            Layout={SignUpUserComponent}
+          />
+
           <Scene
             back
             key="login"
@@ -128,8 +155,10 @@ const Index = (
           />
         </Stack>
       </Tabs>
-    </Scene>
 
+      </Drawer> 
+    </Scene>
+      
     <Scene
       back
       clone
@@ -146,7 +175,7 @@ const Index = (
       key="imobi"
       title="IMÓVEL"
       {...DefaultProps.navbarProps}
-      component={RealEstateContainer}
+      component={RealEstateViewContainer}
       Layout={RealEstateViewComponent}
     />
 
@@ -168,6 +197,16 @@ const Index = (
       {...DefaultProps.navbarProps}
       component={DeleteRealEstateContainer}
       Layout={UpdateRealEstateComponent}
+    />
+
+    <Scene
+      back
+      clone
+      key="employee"
+      title="LISTA FUNCIONÁRIOS"
+      {...DefaultProps.navbarProps}
+      component={ListEmployeeContainer}
+      Layout={ListEmployeeComponent}
     />
     
     <Scene

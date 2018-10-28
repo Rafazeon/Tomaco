@@ -2,52 +2,53 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { createRealEstate } from '../actions/real-estate';
+import { signUp } from '../actions/member';
 
-const UpdateRealEstate = ({
+const SignUpUser = ({
   Layout,
-  member,
   onFormSubmit,
-  realestate,
+  member,
   isLoading,
+  infoMessage,
   errorMessage,
   successMessage,
-  Create
 }) => (
   <Layout
-    realestate={realestate}
+    member={member}
     loading={isLoading}
+    info={infoMessage}
     error={errorMessage}
     success={successMessage}
-    imobi={member.imobi}
     onFormSubmit={onFormSubmit}
-    Create={true}
   />
 );
 
-UpdateRealEstate.propTypes = {
+SignUpUser.propTypes = {
   Layout: PropTypes.func.isRequired,
+  member: PropTypes.shape({}).isRequired,
   onFormSubmit: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  infoMessage: PropTypes.string,
   errorMessage: PropTypes.string,
-  successMessage: PropTypes.string
+  successMessage: PropTypes.string,
 };
 
-UpdateRealEstate.defaultProps = {
+SignUpUser.defaultProps = {
+  infoMessage: null,
   errorMessage: null,
   successMessage: null,
 };
 
 const mapStateToProps = state => ({
-  realestate: state.realestate || {},
+  member: state.member || {},
   isLoading: state.status.loading || false,
+  infoMessage: state.status.info || null,
   errorMessage: state.status.error || null,
   successMessage: state.status.success || null,
-  member: state.member
 });
 
 const mapDispatchToProps = {
-  onFormSubmit: createRealEstate,
+  onFormSubmit: signUp,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UpdateRealEstate);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpUser);

@@ -57,7 +57,7 @@ icon_style:{
     color: '#fff', 
     marginTop: 2,
     borderRadius: 20,
-    padding: 5,
+    padding: 10,
     right: 20,
     width: '13%'
 }

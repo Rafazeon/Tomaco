@@ -26,7 +26,19 @@ const Profile = ({ member, logout, updateRealEstate }) => (
                 <Text>Atualizar Perfil</Text>
               </Body>
             </ListItem>
-
+            
+            {member.role == 'Admin' && 
+            <ListItem onPress={Actions.signUp} icon>
+              <Left>
+                <Icon name="add-circle" />
+              </Left>
+              <Body>
+                <Text>Cadastrar Funcionário</Text>
+              </Body>
+            </ListItem>
+            }
+            
+            {member.role == 'Admin' && member.role == 'Employee' &&
             <ListItem onPress={Actions.updateRealEstate} icon>
               <Left>
                 <Icon name="home" />
@@ -35,6 +47,7 @@ const Profile = ({ member, logout, updateRealEstate }) => (
                 <Text>Cadastrar Imóvel</Text>
               </Body>
             </ListItem>
+            }
 
             <ListItem onPress={logout} icon>
               <Left>
@@ -62,7 +75,8 @@ const Profile = ({ member, logout, updateRealEstate }) => (
                 <Text>Login</Text>
               </Body>
             </ListItem>
-            <ListItem onPress={Actions.signUp} icon>
+
+            <ListItem onPress={Actions.signUpUser} icon>
               <Left>
                 <Icon name="add-circle" />
               </Left>
@@ -70,6 +84,7 @@ const Profile = ({ member, logout, updateRealEstate }) => (
                 <Text>Registrar</Text>
               </Body>
             </ListItem>
+            
             <ListItem onPress={Actions.forgotPassword} icon>
               <Left>
                 <Icon name="help-buoy" />

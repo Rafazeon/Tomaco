@@ -7,11 +7,8 @@ import Loading from './Loading';
 import Messages from './Messages';
 import Header from './Header';
 import Spacer from './Spacer';
-import * as firebase from 'firebase';
-import RNFetchBlob from 'react-native-fetch-blob';
-import ImagePicker from 'react-native-image-crop-picker';
 
-class SignUp extends React.Component {
+class SignUpUser extends React.Component {
   static propTypes = {
     error: PropTypes.string,
     loading: PropTypes.bool.isRequired,
@@ -30,51 +27,13 @@ class SignUp extends React.Component {
       email: '',
       password: '',
       password2: '',
-      imobi: this.props.member && this.props.member.imobi,
+      imobi: '',
       image: '',
-      role: 'Employee'
+      role: 'User'
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  pickMultiple(){
-    this.setState({ load: true })
-    const Blob = RNFetchBlob.polyfill.Blob
-    const fs = RNFetchBlob.fs
-    window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
-    window.Blob = Blob
-    //const { uid } = this.state.user
-    const uid = "Images"
-    ImagePicker.openPicker({
-      width: 300,
-      height: 400,
-      cropping: false,
-      mediaType: 'photo',
-      multiple: false,
-      useFrontCamera: false
-    }).then(image => {
-      this.setState({
-        image: image
-      });
-  files: image
-    testFile = image.path 
-      var files = image
-      let mime = 'image/jpg'
-      let blob = new Blob(RNFetchBlob.wrap(testFile), { type : 'image/jpg;BASE64'})
-          // set it up
-      firebase.storage().ref('Images').constructor.prototype.putFiles = function(files) { 
-        var ref = this;
-          return ref.child(image.modificationDate).put(blob, { contentType: mime });
-      }
-    
-      // use it!
-      firebase.storage().ref('Images').putFiles(files)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
   }
 
   handleChange = (name, val) => {
@@ -92,7 +51,7 @@ class SignUp extends React.Component {
 
   render() {
     const { loading, error } = this.props;
-    console.log(this.state.image)
+    
     // Loading
     if (loading) return <Loading />;
 
@@ -107,16 +66,6 @@ class SignUp extends React.Component {
           {error && <Messages message={error} />}
 
           <Form>
-          {this.state.image ? 
-            <Image
-                source={{ uri: "https://firebasestorage.googleapis.com/v0/b/imobi-cbf7c.appspot.com/o/Images%2F" + this.state.image.modificationDate + "?alt=media" }}
-                style={{
-                  height: 200,
-                  width: null,
-                  flex: 1
-                }}
-              />
-            : <Text></Text>}
             <Item stackedLabel>
               <Label>Nome</Label>
               <Input onChangeText={v => this.handleChange('firstName', v)} />
@@ -135,16 +84,6 @@ class SignUp extends React.Component {
                 onChangeText={v => this.handleChange('email', v)}
               />
             </Item>
-            {!!firebase.auth().currentUser ? <Item></Item> :
-            <Item stackedLabel>
-              <Label>Imobiliária</Label>
-              <Input
-                autoCapitalize="none"
-                keyboardType="email-address"
-                onChangeText={v => this.handleChange('imobi', v)}
-              />
-            </Item>
-            }
 
             <Item stackedLabel>
               <Label>Senha</Label>
@@ -157,8 +96,6 @@ class SignUp extends React.Component {
             </Item>
 
             <Spacer size={20} />
-            
-            <Button value={this.state.image} style={{width: "50%", marginLeft: 'auto', marginRight: 'auto', marginTop: 20, marginBottom: 20 }} block onPress={ this.pickMultiple.bind(this) }><Text>Enviar Logo </Text></Button>
 
             <Button style={{marginBottom: 20}} block onPress={this.handleSubmit}>
               <Text>Cadastrar</Text>
@@ -170,4 +107,4 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp;
+export default SignUpUser;
