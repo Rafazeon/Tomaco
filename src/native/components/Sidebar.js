@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { StyleSheet, Text, View, ViewPropTypes, TouchableOpacity, Image, ImageBackground, AsyncStorage, Platform, Alert, Linking } from 'react-native';
 import { Container, Content, Card, CardItem, Body, Button, Thumbnail, List, ListItem, Right, Left } from 'native-base';
 import { Actions } from 'react-native-router-flux';
@@ -14,6 +13,7 @@ class Menu extends Component {
     componentDidMount() {
         this.props.getMemberData()
     }
+
     render() {  
 
     return (
@@ -84,7 +84,21 @@ class Menu extends Component {
             
             <View>
             {!!firebase.auth().currentUser && this.props.member.role == 'User' ?
-                <ListItem>
+            <View>
+                <ListItem onPress={() => Actions.realestate()}>
+                <Left>
+                    {/* <Icon 
+                    name='dumbbell'
+                    style={{ fontSize: 20, color: 'red' }} /> */}
+                    {/* <Image source={require('../../images/dumbbell.png')} /> */}
+                    <Text style={styles.title}>    Todos Imóveis</Text>
+                </Left>
+                <Right>
+                    <Icon family='FontAwesome' name="arrow-right" />
+                </Right>
+                </ListItem>
+
+                <ListItem onPress={() => Actions.realestate({fav: true})}>
                 <Left>
                     {/* <Icon 
                     name='dumbbell'
@@ -96,6 +110,7 @@ class Menu extends Component {
                     <Icon family='FontAwesome' name="arrow-right" />
                 </Right>
                 </ListItem>
+            </View>
 
                 :
 

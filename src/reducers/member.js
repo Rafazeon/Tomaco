@@ -27,7 +27,8 @@ export default function userReducer(state = initialState, action) {
           lastName: action.data.lastName,
           signedUp: action.data.signedUp,
           role: action.data.role,
-          imobi: action.data.imobi
+          imobi: action.data.imobi,
+          email: action.data.uid
         };
       }
       return initialState;

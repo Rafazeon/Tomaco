@@ -13,6 +13,7 @@ import Filter from '../components/Filter'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+
 const RealEstate = ({
   error,
   loading,
@@ -20,7 +21,10 @@ const RealEstate = ({
   reFetch,
   filters,
   imobi,
-  params
+  params,
+  favorite,
+  fav,
+  userId
 }) => {
   // Loading
   if (loading) return <Loading />;
@@ -40,13 +44,23 @@ const RealEstate = ({
       return item.filter((home) => {
         return home.imobi == params
       })
-    }else{
+
+    }else if(fav == true) {
+      return item.filter((home, index) => {
+        
+              if(favorite[index].status == fav && favorite[index].userId == userId) {
+                  return item
+              }
+      })
+
+    }else{ 
       return item
     }
   }
 
   return (
     <Container>
+      
       <Content>
         {/* <Header
           title="Imóveis"

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { getRealEstateWithFilters, setError, setRealEstate, getRealEstate } from '../actions/real-estate';
 import { getEmployee } from '../actions/member';
-import { createFavorite } from '../actions/favorite';
+import { createFavorite, setFavorite } from '../actions/favorite';
 
 class RealEstate extends Component {
   static propTypes = {
@@ -31,25 +31,11 @@ class RealEstate extends Component {
 
     this.state = {
       imobiId: '',
-      color: ''
+      color: '',
+      status: false
     }
 
     this.addFavorite = this.addFavorite.bind(this)
-  }
-
-  starColor() {
-    var favoriteItem = this.props.favoriteItem
-    var imobiId = this.state.imobiId ? this.state.imobiId : this.props.match.params.id
-    
-    favoriteItem.favorite.filter((item) => {
-        console.log(item.imobiId)
-        console.log(imobiId)
-      if(item.imobiId == imobiId && item.status == true) {
-        this.setState({color: 'red'})
-      }else{
-        this.setState({color: 'gray'})
-      }
-    }) 
   }
   
   componentDidMount = () => {     
@@ -59,20 +45,19 @@ class RealEstate extends Component {
         this.props.getRealEstateWithFilters()
     }
     this.props.getEmployee()
-    this.starColor()
   }
 
-  addFavorite(imobiId, status) {
-    this.setState({imobiId: imobiId})
+  addFavorite(imobiId) {
+    this.setState({status: true})
     const obj = {
-      userId: this.props.member.uid,
-      imobiId: imobiId,
-      email: this.props.member.email,
-      status: status
+        id: this.props.match.params.id,
+        userId: this.props.member.uid,
+        imobiId: imobiId,
+        email: this.props.member.email,
+        status: this.state.status
     }
-    this.props.onFormFavorite(obj).then(response => {
-        this.starColor()
-    })
+    
+    this.props.setFavorite(obj)
   }
   
   /**
@@ -120,7 +105,8 @@ const mapDispatchToProps = {
   setError,
   onFormSubmit: setRealEstate,
   getEmployee,
-  onFormFavorite: createFavorite
+  onFormFavorite: createFavorite,
+  setFavorite
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RealEstate);

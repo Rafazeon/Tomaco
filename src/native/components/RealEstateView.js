@@ -14,8 +14,8 @@ const RealEstateView = ({
   error,
   realestate,
   realestateId,
-  color,
-  addFavorite
+  addFavorite,
+  favoriteItem
 }) => {
   // Error
   if (error) return <Error content={error} />;
@@ -26,6 +26,12 @@ const RealEstateView = ({
     imobi = realestate.find(item => item.id === realestateId);
   }
 
+  let favorite = null
+  if (realestateId && favoriteItem) {
+    favorite = favoriteItem.favorite.find(item => item.imobiId === realestateId);
+  }
+
+  console.log(favorite)
   // Recipe not found
   if (!imobi) return <Error content={ErrorMessages.recipe404} />;
   
@@ -40,10 +46,10 @@ const RealEstateView = ({
       )} /> 
         <Spacer size={25} />
         {!!firebase.auth().currentUser && 
-        <TouchableOpacity onPress={() => addFavorite(imobi.id, true)}>
+        <TouchableOpacity onPress={() => addFavorite(imobi.id)}>
         <Card>
           <CardItem>
-          <Icon style={{position: 'relative', top: 8}} name="star" size={20} color={color} />
+          <Icon style={{position: 'relative', top: 8}} name="star" size={20} color={favorite && favorite.status == true ? 'red' : 'gray'} />
           <Body>
             <Text style={{fontWeight: '500', marginTop: 15, fontSize: 13}}>  Adicionar ao Favoritos</Text>
           </Body>

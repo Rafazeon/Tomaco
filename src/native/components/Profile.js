@@ -38,7 +38,7 @@ const Profile = ({ member, logout, updateRealEstate }) => (
             </ListItem>
             }
             
-            {member.role == 'Admin' && member.role == 'Employee' &&
+            {member.role == 'Admin' || member.role == 'Employee' &&
             <ListItem onPress={Actions.updateRealEstate} icon>
               <Left>
                 <Icon name="home" />

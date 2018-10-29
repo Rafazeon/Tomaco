@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { getRealEstateWithFilters, setError, setRealEstate, getRealEstate } from '../actions/real-estate';
-import { getEmployee } from '../actions/member';
+import { getEmployee, getMemberData } from '../actions/member';
 import { getFavorite } from '../actions/favorite';
 
 class RealEstate extends Component {
@@ -34,6 +34,8 @@ class RealEstate extends Component {
     }
     this.props.getEmployee()
     this.props.getFavorite()
+    this.props.getMemberData()
+    
   }
   
   /**
@@ -44,9 +46,9 @@ class RealEstate extends Component {
   }
   
   render = () => {
-    const { Layout, realestate, filters, editrealestate, match, onFormSubmit, member, params } = this.props;
+    const { Layout, realestate, filters, editrealestate, match, onFormSubmit, member, params, favorite, fav } = this.props;
     const id = (match && match.params && match.params.id) ? match.params.id : null;
-    
+    console.log(this.props)
     return (
       <Layout
         realestateId={id}
@@ -59,6 +61,9 @@ class RealEstate extends Component {
         filters={filters}
         imobi={member.imobi}
         params={params}
+        favorite={favorite.favorite}
+        fav={fav}
+        userId={member.uid}
       />
     );
   }
@@ -68,6 +73,7 @@ const mapStateToProps = state => (
   { filters: state.realestate.filters,
     realestate: state.realestate || {},
     member: state.member || {},
+    favorite: state.favorite || {}
   }
 );
 
@@ -77,7 +83,8 @@ const mapDispatchToProps = {
   setError,
   onFormSubmit: setRealEstate,
   getEmployee,
-  getFavorite
+  getFavorite,
+  getMemberData
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RealEstate);
