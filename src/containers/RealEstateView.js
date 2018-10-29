@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { getRealEstateWithFilters, setError, setRealEstate, getRealEstate } from '../actions/real-estate';
-import { getEmployee } from '../actions/member';
+import { getEmployee, getMemberData } from '../actions/member';
 import { createFavorite, setFavorite } from '../actions/favorite';
 
 class RealEstate extends Component {
@@ -45,6 +45,7 @@ class RealEstate extends Component {
         this.props.getRealEstateWithFilters()
     }
     this.props.getEmployee()
+    this.props.getMemberData()
   }
 
   addFavorite(imobiId) {
@@ -86,6 +87,7 @@ class RealEstate extends Component {
         addFavorite={this.addFavorite}
         favoriteItem={favoriteItem}
         color={this.state.color}
+        userId={member.uid}
       />
     );
   }
@@ -106,7 +108,8 @@ const mapDispatchToProps = {
   onFormSubmit: setRealEstate,
   getEmployee,
   onFormFavorite: createFavorite,
-  setFavorite
+  setFavorite,
+  getMemberData
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RealEstate);

@@ -15,7 +15,8 @@ const RealEstateView = ({
   realestate,
   realestateId,
   addFavorite,
-  favoriteItem
+  favoriteItem,
+  userId
 }) => {
   // Error
   if (error) return <Error content={error} />;
@@ -31,13 +32,13 @@ const RealEstateView = ({
     favorite = favoriteItem.favorite.find(item => item.imobiId === realestateId);
   }
 
-  console.log(favorite)
+  
   // Recipe not found
   if (!imobi) return <Error content={ErrorMessages.recipe404} />;
-  
+   
   return (
     <Container>
-      <Content>
+      <Content> 
       
       <ImageSlider style={{width: null, height: 300}} 
       
@@ -45,11 +46,11 @@ const RealEstateView = ({
         "https://firebasestorage.googleapis.com/v0/b/imobi-cbf7c.appspot.com/o/Images%2F" + item.modificationDate + "?alt=media"
       )} /> 
         <Spacer size={25} />
-        {!!firebase.auth().currentUser && 
+        {!!firebase.auth().currentUser &&
         <TouchableOpacity onPress={() => addFavorite(imobi.id)}>
         <Card>
           <CardItem>
-          <Icon style={{position: 'relative', top: 8}} name="star" size={20} color={favorite && favorite.status == true ? 'red' : 'gray'} />
+          <Icon style={{position: 'relative', top: 8}} name="star" size={20} color={favorite && favorite.userId == userId && favorite.status == true ? 'red' : 'gray'} />
           <Body>
             <Text style={{fontWeight: '500', marginTop: 15, fontSize: 13}}>  Adicionar ao Favoritos</Text>
           </Body>
