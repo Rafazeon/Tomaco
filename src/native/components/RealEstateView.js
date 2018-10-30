@@ -9,6 +9,7 @@ import * as firebase from 'firebase';
 import ImageSlider from 'react-native-image-slider';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import MapView, { Marker } from 'react-native-maps';
  
 const RealEstateView = ({
   error,
@@ -16,7 +17,8 @@ const RealEstateView = ({
   realestateId,
   addFavorite,
   favoriteItem,
-  userId
+  userId,
+  latlong
 }) => {
   // Error
   if (error) return <Error content={error} />;
@@ -31,15 +33,14 @@ const RealEstateView = ({
   if (realestateId && favoriteItem) {
     favorite = favoriteItem.favorite.find(item => item.imobiId === realestateId);
   }
-
   
   // Recipe not found
   if (!imobi) return <Error content={ErrorMessages.recipe404} />;
-   
+  
   return (
     <Container>
       <Content> 
-      
+  
       <ImageSlider style={{width: null, height: 300}} 
       
       images={imobi.image.map((item,i)=>
@@ -58,6 +59,28 @@ const RealEstateView = ({
         </Card>
         </TouchableOpacity>
         }
+        <Card>
+          <CardItem style={{height: 300}}>
+          {latlong.results &&
+            <MapView
+            style={styles.map}
+              initialRegion={{
+                latitude: latlong.results[0].geometry.location.lat,  
+                longitude: latlong.results[0].geometry.location.lng,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+            ><MapView.Marker 
+              coordinate={{
+                latitude: latlong.results[0].geometry.location.lat,
+                longitude: latlong.results[0].geometry.location.lng
+              }} />
+            </MapView>
+          }
+
+           </CardItem>
+        </Card>
+        
       
         <Card>
           <CardItem>
@@ -150,6 +173,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start'
+   },
+
+   map: {
+    ...StyleSheet.absoluteFillObject,
    }
 });
 

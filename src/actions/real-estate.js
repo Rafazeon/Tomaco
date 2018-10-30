@@ -1,6 +1,9 @@
 import { Firebase, FirebaseRef } from '../lib/firebase';
 import * as firebase from 'firebase';
 import { array } from 'lodash/array';
+import axios from 'axios';
+
+const key = "AIzaSyCrCsmgenHNfYgkdjXIn8AShOEXbksbX8M"
 
 /**
   * Sign Up to Firebase
@@ -207,6 +210,19 @@ export function deleteRealEstate(formData) {
     })
   }
 
+  export function getRealEstateMap(address) {
+    // BUSCA GEO 
+      return (dispatch) => new Promise((resolve) => {
+      axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=`+ address + `&key=` + key).then(function(response) {
+          return resolve(dispatch({
+              type: 'GET_MAP',
+              data: response.data
+            })), console.log(response)
+        })
+        .catch(e => console.log(e));
+      })
+    }
+
   // FILTERS
 export function setRealEstateFilters(filters) {
   return dispatch => dispatch({type: 'SET_REAL_ESTATE_FILTERS', data: filters});
@@ -214,4 +230,8 @@ export function setRealEstateFilters(filters) {
 
 export function cleanRealEstateFilters(filters) {
   return dispatch => dispatch({type: 'CLEAN_REAL_ESTATE_FILTERS', data: filters});
+}
+
+export function cleanRealEstateMap(address) {
+  return dispatch => dispatch({type: 'CLEAN_MAP', data: address});
 }

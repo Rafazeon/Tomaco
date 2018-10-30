@@ -49,6 +49,20 @@ export default function realEstateReducer(state = initialState, action) {
       realestate
     };
   }
+
+  case 'GET_MAP': {
+    const latlong = {
+      latlong: action.data
+    };
+      return merge({}, state, latlong);
+  }
+
+  case 'CLEAN_MAP': {
+    const latlong = {
+      latlong: initialState.latlong
+    };
+      return merge({}, state, latlong);
+  }
   
   case 'SET_REAL_ESTATE_FILTERS':
   {

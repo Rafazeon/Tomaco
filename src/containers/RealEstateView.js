@@ -46,6 +46,7 @@ class RealEstate extends Component {
     }
     this.props.getEmployee()
     this.props.getMemberData()
+    
   }
 
   addFavorite(imobiId) {
@@ -69,9 +70,9 @@ class RealEstate extends Component {
   }
   
   render = () => {
-    const { Layout, realestate, filters, editrealestate, match, onFormSubmit, member, params, favoriteItem } = this.props;
+    const { Layout, realestate, filters, editrealestate, match, onFormSubmit, member, favoriteItem, latlong } = this.props;
     const id = (match && match.params && match.params.id) ? match.params.id : null;
-
+    
     return (
       <Layout
         realestateId={id}
@@ -83,11 +84,12 @@ class RealEstate extends Component {
         editrealestate={true}
         filters={filters}
         imobi={member.imobi}
-        params={params}
+        params={match.params}
         addFavorite={this.addFavorite}
         favoriteItem={favoriteItem}
         color={this.state.color}
         userId={member.uid}
+        latlong={latlong}
       />
     );
   }
@@ -97,7 +99,8 @@ const mapStateToProps = state => (
   { filters: state.realestate.filters,
     realestate: state.realestate || {},
     member: state.member || {},
-    favoriteItem: state.favorite || {}
+    favoriteItem: state.favorite || {},
+    latlong: state.realestate.latlong || {}
   }
 );
 

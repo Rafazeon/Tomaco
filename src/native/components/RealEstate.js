@@ -24,7 +24,8 @@ const RealEstate = ({
   params,
   favorite,
   fav,
-  userId
+  userId,
+  getLatLong
 }) => {
   // Loading
   if (loading) return <Loading />;
@@ -34,7 +35,13 @@ const RealEstate = ({
 
   const keyExtractor = (item, index) => index.toString();
 
-  const onPress = item => Actions.imobi({ match: { params: { id: String(item.id) } } });
+  const onPress = item => {
+    var address = item.address + ', ' + item.number + ', ' + item.city + ' - ' + item.uf
+
+    getLatLong(address)
+    
+    Actions.imobi({ match: { params: { id: String(item.id) } } });
+  }
   const onEdit = item => Actions.imobiEdit({ match: { params: { id: String(item.id) } } });
   const onDelete = item => Actions.imobiDelete({ match: { params: { id: String(item.id) } } });
   const types = filters.types + ' ' + filters.goal;
@@ -47,10 +54,9 @@ const RealEstate = ({
 
     }else if(fav == true) {
       return item.filter((home, index) => {
-        
-              if(favorite[index].status == fav && favorite[index].userId == userId) {
-                  return item
-              }
+        if(favorite[index].status == fav && favorite[index].userId == userId) {
+          return item
+        }
       })
 
     }else{ 

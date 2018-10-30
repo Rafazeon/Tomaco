@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getRealEstateWithFilters, setError, setRealEstate, getRealEstate } from '../actions/real-estate';
+import { getRealEstateWithFilters, setError, setRealEstate, getRealEstate, getRealEstateMap, cleanRealEstateMap } from '../actions/real-estate';
 import { getEmployee, getMemberData } from '../actions/member';
 import { getFavorite } from '../actions/favorite';
 
@@ -25,6 +25,17 @@ class RealEstate extends Component {
   static defaultProps = {
     match: null,
   }
+
+  constructor(props) {
+    super(props)
+
+    this.getLatLong = this.getLatLong.bind(this)
+  }
+
+  async getLatLong(address) {
+    this.props.cleanRealEstateMap(address)
+    await this.props.getRealEstateMap(address)
+  }
   
   componentDidMount = () => {     
     if(this.props.realestate.apply_filters === false) {
@@ -35,7 +46,6 @@ class RealEstate extends Component {
     this.props.getEmployee()
     this.props.getFavorite()
     this.props.getMemberData()
-    
   }
   
   /**
@@ -48,7 +58,7 @@ class RealEstate extends Component {
   render = () => {
     const { Layout, realestate, filters, editrealestate, match, onFormSubmit, member, params, favorite, fav } = this.props;
     const id = (match && match.params && match.params.id) ? match.params.id : null;
-    console.log(this.props)
+     
     return (
       <Layout
         realestateId={id}
@@ -64,6 +74,7 @@ class RealEstate extends Component {
         favorite={favorite.favorite}
         fav={fav}
         userId={member.uid}
+        getLatLong={this.getLatLong}
       />
     );
   }
@@ -84,7 +95,9 @@ const mapDispatchToProps = {
   onFormSubmit: setRealEstate,
   getEmployee,
   getFavorite,
-  getMemberData
+  getMemberData,
+  getRealEstateMap,
+  cleanRealEstateMap
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RealEstate);
