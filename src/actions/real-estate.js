@@ -11,6 +11,7 @@ const key = "AIzaSyCrCsmgenHNfYgkdjXIn8AShOEXbksbX8M"
 export function createRealEstate(formData) {
   const {
     id,
+    userId,
     title,
     description,
     bedrooms,
@@ -28,7 +29,9 @@ export function createRealEstate(formData) {
     city,
     neighborhood,
     price,
-    imobi
+    imobi,
+    email,
+    photo
   } = formData;
 
   return dispatch => new Promise(async (resolve, reject) => {
@@ -38,6 +41,7 @@ export function createRealEstate(formData) {
 
     ref.set({
             id: key,
+            userId,
             title, 
             description,
             bedrooms,
@@ -55,7 +59,9 @@ export function createRealEstate(formData) {
             city,
             neighborhood,
             price,
-            imobi
+            imobi,  
+            email,
+            photo
           }).then(() => statusMessage(dispatch, 'loading', false)
           .then(resolve))
       .catch(reject);
@@ -171,7 +177,9 @@ const {
     uf: uf,
     city: city,
     neighborhood: neighborhood,
-    price: price
+    price: price,
+    email: email,
+    photo: photo
   } = formData;
 
   return dispatch => new Promise(async (resolve, reject) => {
@@ -201,7 +209,9 @@ export function deleteRealEstate(formData) {
       uf: uf,
       city: city,
       neighborhood: neighborhood,
-      price: price
+      price: price,
+      email: email,
+      photo: photo
     } = formData;
   
     return dispatch => new Promise(async (resolve, reject) => {

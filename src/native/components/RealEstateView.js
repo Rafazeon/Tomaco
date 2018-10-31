@@ -36,7 +36,7 @@ const RealEstateView = ({
   
   // Recipe not found
   if (!imobi) return <Error content={ErrorMessages.recipe404} />;
-  
+  console.log(imobi)
   return (
     <Container>
       <Content> 
@@ -65,15 +65,15 @@ const RealEstateView = ({
             <MapView
             style={styles.map}
               initialRegion={{
-                latitude: latlong.results[0].geometry.location.lat,  
-                longitude: latlong.results[0].geometry.location.lng,
+                latitude: !imobi.address ? -24.9637052 : latlong.results[0].geometry.location.lat,  
+                longitude: !imobi.address ? -53.6124374 : latlong.results[0].geometry.location.lng,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               }}
             ><MapView.Marker 
               coordinate={{
-                latitude: latlong.results[0].geometry.location.lat,
-                longitude: latlong.results[0].geometry.location.lng
+                latitude: !imobi.address ? -24.9637052 : latlong.results[0].geometry.location.lat,
+                longitude: !imobi.address ? -53.6124374 : latlong.results[0].geometry.location.lng
               }} />
             </MapView>
           }
@@ -143,6 +143,18 @@ const RealEstateView = ({
             <Text style={{fontWeight: '500', marginTop: 15, fontSize: 13}}>  Descrição: {imobi.description}</Text>
           </Body>
         </CardItem>
+        </Card>
+
+        <Card>
+          <CardItem>
+          
+            <Thumbnail square style={{height: 100, width: null, flex: 1}} source={{ uri: imobi.photo ? "https://firebasestorage.googleapis.com/v0/b/imobi-cbf7c.appspot.com/o/Images%2F" + imobi.photo.modificationDate + "?alt=media" : "" }}
+                     />
+            <Body>
+              <Text style={{fontWeight: '500', marginTop: 15, fontSize: 18}}>  Imobiliária</Text>
+              <Text style={{fontWeight: '500', marginTop: 15, fontSize: 18}}>  {imobi.imobi}</Text>
+            </Body>
+          </CardItem>
         </Card>
         
         <Spacer size={20} />

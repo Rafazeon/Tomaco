@@ -37,7 +37,9 @@ export default function realEstateReducer(state = initialState, action) {
         city: item.city,
         neighborhood: item.neighborhood,
         price: item.price,
-        imobi: item.imobi
+        imobi: item.imobi,
+        email: item.email,
+        photo: item.photo
       }));
       
     }

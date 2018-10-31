@@ -40,7 +40,7 @@ class DeleteRealEstate extends Component {
   
 
   render = () => {
-    const { Layout, realestate, delrealestate, match, onFormSubmit } = this.props;
+    const { Layout, realestate, delrealestate, match, onFormSubmit, member } = this.props;
     const id = (match && match.params && match.params.id) ? match.params.id : null;
 
     return (
@@ -52,6 +52,7 @@ class DeleteRealEstate extends Component {
         reFetch={() => this.fetchRealEstate()}
         onFormSubmit={onFormSubmit}
         delrealestate={true}
+        user={member}
       />
     );
   }
@@ -59,6 +60,7 @@ class DeleteRealEstate extends Component {
 
 const mapStateToProps = state => ({
   realestate: state.realestate || {},
+  member: state.member || {}
 });
 
 const mapDispatchToProps = {

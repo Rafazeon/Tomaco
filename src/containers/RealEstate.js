@@ -75,6 +75,7 @@ class RealEstate extends Component {
         fav={fav}
         userId={member.uid}
         getLatLong={this.getLatLong}
+        user={member}
       />
     );
   }

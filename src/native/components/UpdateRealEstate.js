@@ -75,6 +75,7 @@ class UpdateRealEstate extends React.Component {
       neighborhood: props.realestate.neighborhood || '',
       price: props.realestate.price || '',
       imobi: props.imobi || '',
+      email: props.user.email || '',
       load: false,
       dp: null
     };
@@ -82,6 +83,7 @@ class UpdateRealEstate extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSelectTypesGoal = this.handleSelectTypesGoal.bind(this);
     this.handleCep = this.handleCep.bind(this);
+
   }
 
   componentDidMount(){
@@ -104,17 +106,19 @@ class UpdateRealEstate extends React.Component {
     newRealEstate.bedrooms = Number(this.state.bedrooms);
     newRealEstate.bathrooms = Number(this.state.bathrooms);
     newRealEstate.vacancies = Number(this.state.vacancies);
+    newRealEstate.email = this.state.email,
+    newRealEstate.photo = this.props.user.image
     
     if(this.props.Create) {
       this.props.onFormSubmit(newRealEstate)
       .then(this.setState({id: this.state.id, title: '', description: '', bedrooms: '', bathrooms: '', types: '', suites: '', vacancies: '', goal: '', area: '', price: '', cep: '', address: '',
-      number: '', complement: '', uf: '', city: '', neighborhood: '', images: this.state.images, imobi: this.props.imobi})) 
+      number: '', complement: '', uf: '', city: '', neighborhood: '', images: this.state.images, imobi: this.props.imobi, email: this.props.user.email})) 
       .then(Actions.realestate()) 
       .then(() => console.log('Real Estate Atualizado'))
       .catch(e => console.log(`Error: ${e}`));
     }else{
       this.props.onFormSubmit(newRealEstate)
-      .then(this.setState({id: this.state.id, images: this.state.image})) 
+      .then(this.setState({id: this.state.id, images: this.state.image, photo: this.state.photo})) 
       .then(Actions.realestate()) 
       .then(() => console.log('Real Estate Atualizado'))
       .catch(e => console.log(`Error: ${e}`));
@@ -129,7 +133,7 @@ class UpdateRealEstate extends React.Component {
           return response.data.map((item,i)=> 
             {item.id === RealEstateId ? this.setState({title: item.title, description: item.description, bedrooms: item.bedrooms.toString(), bathrooms: item.bathrooms.toString(), 
               types_goal: item.types_goal, images: item.images, suites: item.suites, vacancies: item.vacancies.toString(), area: item.area.toString(), price: item.price.toString(), 
-              cep: item.cep, address: item.address, number: item.number, complement: item.complement, uf: item.uf, city: item.city, neighborhood: item.neighborhood, imobi: item.imobi}) : ''} 
+              cep: item.cep, address: item.address, number: item.number, complement: item.complement, uf: item.uf, city: item.city, neighborhood: item.neighborhood, imobi: item.imobi, email: item.email, photo: item.photo}) : ''} 
           )       
         } else {
           reject(new Error('error'))

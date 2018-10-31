@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image } from 'react-native';
 import PropTypes from 'prop-types';
 import { Container, Content, Text, Body, ListItem, Form, Item, Label, Input, CheckBox, Button, View } from 'native-base';
 import Messages from './Messages';
@@ -6,6 +7,9 @@ import Loading from './Loading';
 import Header from './Header';
 import Spacer from './Spacer';
 import { Actions } from 'react-native-router-flux';
+import * as firebase from 'firebase';
+import RNFetchBlob from 'react-native-fetch-blob';
+import ImagePicker from 'react-native-image-crop-picker';
 
 class UpdateProfile extends React.Component {
   static propTypes = {
@@ -35,10 +39,49 @@ class UpdateProfile extends React.Component {
       password2: '',
       changeEmail: false,
       changePassword: false,
+      image: props.member.image || ''
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  pickMultiple(){
+    this.setState({ load: true })
+    const Blob = RNFetchBlob.polyfill.Blob
+    const fs = RNFetchBlob.fs
+    window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
+    window.Blob = Blob
+    //const { uid } = this.state.user
+    const uid = "Images"
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: false,
+      mediaType: 'photo',
+      multiple: false,
+      useFrontCamera: false
+    }).then(image => {
+      this.setState({
+        image: image
+      });
+  files: image
+    testFile = image.path 
+      var files = image
+      let mime = 'image/jpg'
+      let blob = new Blob(RNFetchBlob.wrap(testFile), { type : 'image/jpg;BASE64'})
+          // set it up
+      firebase.storage().ref('Images').constructor.prototype.putFiles = function(files) { 
+        var ref = this;
+          return ref.child(image.modificationDate).put(blob, { contentType: mime });
+      }
+    
+      // use it!
+      firebase.storage().ref('Images').putFiles(files)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   }
 
   handleChange = (name, val) => {
@@ -49,11 +92,13 @@ class UpdateProfile extends React.Component {
   }
 
   handleSubmit = () => {
+    console.log(this.state)
     this.props.onFormSubmit(this.state)
       .then(() => console.log('Perfil Atualizado'))
       .then(Actions.login())
       .catch(e => console.log(`Error: ${e}`));
   }
+  
 
   render() {
     const { loading, error, success } = this.props;
@@ -68,6 +113,16 @@ class UpdateProfile extends React.Component {
           {success && <Messages message={success} type="success" />}
 
           <Form>
+          {this.state.image ? 
+            <Image
+                source={{ uri: "https://firebasestorage.googleapis.com/v0/b/imobi-cbf7c.appspot.com/o/Images%2F" + this.state.image.modificationDate + "?alt=media" }}
+                style={{
+                  height: 200,
+                  width: null,
+                  flex: 1
+                }}
+              />
+            : <Text></Text>}
             <Item stackedLabel>
               <Label>Nome</Label>
               <Input
@@ -128,6 +183,10 @@ class UpdateProfile extends React.Component {
                   <Input secureTextEntry onChangeText={v => this.handleChange('password2', v)} />
                 </Item>
               </View>
+            }
+
+            {!!firebase.auth().currentUser &&
+              <Button value={this.state.image} style={{width: "50%", marginLeft: 'auto', marginRight: 'auto', marginTop: 20, marginBottom: 20 }} block onPress={ this.pickMultiple.bind(this) }><Text>Enviar Logo </Text></Button>
             }
 
             <Spacer size={20} />
