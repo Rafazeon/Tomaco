@@ -5,10 +5,10 @@ class ListEmployee extends Component {
   getEmployee() {
       var employee = this.props.employee
       var imobi = this.props.member.imobi
-        return employee.map((item) => {
+        return employee.map((item, index) => {
             if(item.role == 'Employee' && item.imobi == imobi) {
                 return (
-                    <List>
+                    <List key={index}>
                         <ListItem>
                         <Left>
                         <Text>{item.firstName + ' ' + item.lastName}</Text>

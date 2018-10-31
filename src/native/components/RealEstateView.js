@@ -1,7 +1,8 @@
 import React from 'react';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import { Container, Content, Card, CardItem, Body, H3, List, ListItem, Text, Thumbnail } from 'native-base';
+import { Container, Content, Card, CardItem, Body, Form, Item, Input, Label, Text, Thumbnail, Button } from 'native-base';
 import ErrorMessages from '../../constants/errors';
 import Error from './Error';
 import Spacer from './Spacer';
@@ -11,6 +12,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MapView, { Marker } from 'react-native-maps';
  
+
 const RealEstateView = ({
   error,
   realestate,
@@ -18,7 +20,9 @@ const RealEstateView = ({
   addFavorite,
   favoriteItem,
   userId,
-  latlong
+  latlong,
+  handleChange,
+  sendContact
 }) => {
   // Error
   if (error) return <Error content={error} />;
@@ -154,6 +158,34 @@ const RealEstateView = ({
               <Text style={{fontWeight: '500', marginTop: 15, fontSize: 18}}>  Imobiliária</Text>
               <Text style={{fontWeight: '500', marginTop: 15, fontSize: 18}}>  {imobi.imobi}</Text>
             </Body>
+          </CardItem>
+        </Card>
+
+        <Card>
+          <CardItem>
+            <Form>
+            <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}> 
+                <Text>Enviar Mensagem</Text>
+            </View>
+            <Item stackedLabel>
+              <Label>Nome</Label>
+              <Input onChangeText={v => handleChange('name', v)} />
+            </Item>
+
+            <Item stackedLabel>
+              <Label>E-mail</Label>
+              <Input onChangeText={v => handleChange('email', v)} />
+            </Item>
+
+            <Item stackedLabel>
+              <Label>Telefone</Label>
+              <Input onChangeText={v => handleChange('phone', v)} />
+            </Item>
+
+            <Button onPress={() => sendContact(imobi.imobi)} style={{marginTop: 10, marginBottom: 10 }} block>
+              <Text>Contatar Imobiliária</Text>
+            </Button>
+            </Form>
           </CardItem>
         </Card>
         

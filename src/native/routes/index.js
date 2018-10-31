@@ -44,9 +44,10 @@ import FilterViewComponent from '../components/FilterView';
 import ListEmployeeContainer from '../../containers/ListEmployee';
 import ListEmployeeComponent from '../components/ListEmployee';
 
-import SidebarComponent from '../components/Sidebar';
+import ListContactContainer from '../../containers/ListContact';
+import ListContactComponent from '../components/ListContact';
 
-import firebase from 'firebase'
+import SidebarComponent from '../components/Sidebar';
 
 console.disableYellowBox = true;
 
@@ -207,6 +208,16 @@ const Index = (
       {...DefaultProps.navbarProps}
       component={ListEmployeeContainer}
       Layout={ListEmployeeComponent}
+    />
+
+    <Scene
+      back
+      clone
+      key="contact"
+      title="LISTA CONTATOS"
+      {...DefaultProps.navbarProps}
+      component={ListContactContainer}
+      Layout={ListContactComponent}
     />
     
     <Scene

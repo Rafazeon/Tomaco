@@ -1,4 +1,3 @@
-import ErrorMessages from '../constants/errors';
 import statusMessage from './status';
 import { Firebase, FirebaseRef } from '../lib/firebase';
 import * as firebase from 'firebase';
@@ -15,7 +14,7 @@ export function createFavorite(formData) {
       return dispatch => new Promise(async (resolve, reject) => {
         const ref = FirebaseRef.child('favorite').push()
         const key = ref.key;
-        // Write the new post's data simultaneously in the posts list and the user's post list.
+        
         ref.set({
             id: key,
             userId: userId,

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { getRealEstateWithFilters, setError, setRealEstate, getRealEstate } from '../actions/real-estate';
 import { getEmployee, getMemberData } from '../actions/member';
-import { createFavorite, setFavorite } from '../actions/favorite';
+import { setFavorite } from '../actions/favorite';
+import { createContact } from '../actions/contact';
 
 class RealEstate extends Component {
   static propTypes = {
@@ -32,10 +34,15 @@ class RealEstate extends Component {
     this.state = {
       imobiId: '',
       color: '',
-      status: false
+      status: false,
+      name: '',
+      email: '',
+      phone: ''
     }
 
     this.addFavorite = this.addFavorite.bind(this)
+    this.sendContact = this.sendContact.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
   
   componentDidMount = () => {     
@@ -60,6 +67,34 @@ class RealEstate extends Component {
     }
     
     this.props.setFavorite(obj)
+  }
+
+  sendContact(imobi) {
+    const data = {
+      name: this.state.name,
+      email: this.state.email,
+      phone: this.state.phone,
+      imobi: imobi
+    }
+
+    if(!data.name) {
+      return Alert.alert('Preencha seu nome')
+    }
+
+    if(!data.email || !data.phone){
+      return Alert.alert('Preencha seu email ou telefone')
+    }
+    
+    this.props.createContact(data).then(
+      Alert.alert('Contato Enviado, Obrigado')
+    )
+  }
+
+  handleChange = (name, val) => {
+    this.setState({
+      ...this.state,
+      [name]: val,
+    });
   }
   
   /**
@@ -90,6 +125,8 @@ class RealEstate extends Component {
         color={this.state.color}
         userId={member.uid}
         latlong={latlong}
+        handleChange={this.handleChange}
+        sendContact={this.sendContact}
       />
     );
   }
@@ -110,9 +147,9 @@ const mapDispatchToProps = {
   setError,
   onFormSubmit: setRealEstate,
   getEmployee,
-  onFormFavorite: createFavorite,
   setFavorite,
-  getMemberData
+  getMemberData,
+  createContact
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RealEstate);

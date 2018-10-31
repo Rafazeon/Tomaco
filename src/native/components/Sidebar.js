@@ -6,12 +6,14 @@ import { Actions } from 'react-native-router-flux';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import { getMemberData } from '../../actions/member';
+import { getContact } from '../../actions/contact';
 
 import firebase from 'firebase';
 
 class Menu extends Component {
     componentDidMount() {
         this.props.getMemberData()
+        this.props.getContact()
     }
 
     render() {  
@@ -66,6 +68,20 @@ class Menu extends Component {
                     <Icon family='FontAwesome' name="arrow-right" />
                 </Right>
                 </ListItem>
+
+                <ListItem onPress={() => Actions.contact({params: this.props.member.imobi})}>
+                <Left>
+                    {/* <Icon 
+                    name='dumbbell'
+                    style={{ fontSize: 20, color: 'red' }} /> */}
+                    {/* <Image source={require('../../images/dumbbell.png')} /> */}
+                    <Text style={styles.title}>    Meus Contatos</Text>
+                </Left>
+                <Right>
+                    <Icon family='FontAwesome' name="arrow-right" />
+                </Right>
+                </ListItem>
+
 
             {this.props.member.role == 'Admin' && 
                 <ListItem onPress={() => Actions.employee({params: this.props.member})}>
@@ -249,7 +265,8 @@ const styles = StyleSheet.create({
   });
 
   const mapDispatchToProps = {
-    getMemberData
+    getMemberData,
+    getContact
   };
 
 
