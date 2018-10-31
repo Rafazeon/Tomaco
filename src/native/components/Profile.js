@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import { Container, Content, List, ListItem, Body, Left, Text, Icon } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import Header from './Header';
+import * as firebase from 'firebase';
 
 const Profile = ({ member, logout, updateRealEstate }) => (
   <Container>
@@ -38,7 +39,7 @@ const Profile = ({ member, logout, updateRealEstate }) => (
             </ListItem>
             }
             
-            {member.role == 'Admin' || member.role == 'Employee' &&
+            {!!firebase.auth().currentUser && member.imobi && 
             <ListItem onPress={Actions.updateRealEstate} icon>
               <Left>
                 <Icon name="home" />

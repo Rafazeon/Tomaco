@@ -40,7 +40,7 @@ const RealEstate = ({
 
     getLatLong(address)
     
-    Actions.imobi({ match: { params: { id: String(item.id) } } });
+    Actions.imobi({ match: { params: { id: String(item.id), title: item.title } } });
   }
   const onEdit = item => Actions.imobiEdit({ match: { params: { id: String(item.id) } } });
   const onDelete = item => Actions.imobiDelete({ match: { params: { id: String(item.id) } } });
@@ -106,6 +106,7 @@ const RealEstate = ({
               
               <CardItem cardBody>
                 <TouchableOpacity onPress={() => onPress(item)} style={{ flex: 1 }}>
+                <Text style={{fontSize: 18, fontWeight: 'bold', position: 'relative', bottom: 10, left: 10}}>{item.title}</Text>
                   <Image
                     source={{ uri: "https://firebasestorage.googleapis.com/v0/b/imobi-cbf7c.appspot.com/o/Images%2F" + item.image[0].modificationDate + "?alt=media" }}
                     style={{

@@ -28,7 +28,7 @@ class Menu extends Component {
         <Col>
         <View style={styles.avatarbg}>
             <Image style={styles.elipse} source={require('../../images/elipse.png')} />
-            <Thumbnail style={styles.avatar} source={{uri: "https://firebasestorage.googleapis.com/v0/b/imobi-cbf7c.appspot.com/o/Images%2F" + this.props.member.image.modificationDate + "?alt=media"}} />
+            <Thumbnail style={styles.avatar} source={{uri: this.props.member.image && "https://firebasestorage.googleapis.com/v0/b/imobi-cbf7c.appspot.com/o/Images%2F" + this.props.member.image.modificationDate + "?alt=media"}} />
         </View>
         
         </Col>

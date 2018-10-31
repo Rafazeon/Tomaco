@@ -1,6 +1,5 @@
 import statusMessage from './status';
 import { Firebase, FirebaseRef } from '../lib/firebase';
-import * as firebase from 'firebase';
 
 export function createContact(formData) {
     const {

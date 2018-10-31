@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 
 import { getRealEstateWithFilters, setError, setRealEstate, getRealEstate } from '../actions/real-estate';
 import { getEmployee, getMemberData } from '../actions/member';
@@ -53,7 +54,7 @@ class RealEstate extends Component {
     }
     this.props.getEmployee()
     this.props.getMemberData()
-    
+    Actions.refresh({title: this.props.match.params.title})
   }
 
   addFavorite(imobiId) {

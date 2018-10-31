@@ -75,7 +75,6 @@ class UpdateRealEstate extends React.Component {
       neighborhood: props.realestate.neighborhood || '',
       price: props.realestate.price || '',
       imobi: props.imobi || '',
-      email: props.user.email || '',
       load: false,
       dp: null
     };
@@ -83,7 +82,7 @@ class UpdateRealEstate extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSelectTypesGoal = this.handleSelectTypesGoal.bind(this);
     this.handleCep = this.handleCep.bind(this);
-
+    console.log(this.props)
   }
 
   componentDidMount(){
@@ -106,13 +105,13 @@ class UpdateRealEstate extends React.Component {
     newRealEstate.bedrooms = Number(this.state.bedrooms);
     newRealEstate.bathrooms = Number(this.state.bathrooms);
     newRealEstate.vacancies = Number(this.state.vacancies);
-    newRealEstate.email = this.state.email,
+    newRealEstate.email = this.props.user.email
     newRealEstate.photo = this.props.user.image
     
     if(this.props.Create) {
       this.props.onFormSubmit(newRealEstate)
       .then(this.setState({id: this.state.id, title: '', description: '', bedrooms: '', bathrooms: '', types: '', suites: '', vacancies: '', goal: '', area: '', price: '', cep: '', address: '',
-      number: '', complement: '', uf: '', city: '', neighborhood: '', images: this.state.images, imobi: this.props.imobi, email: this.props.user.email})) 
+      number: '', complement: '', uf: '', city: '', neighborhood: '', images: this.state.images, imobi: this.props.imobi})) 
       .then(Actions.realestate()) 
       .then(() => console.log('Real Estate Atualizado'))
       .catch(e => console.log(`Error: ${e}`));

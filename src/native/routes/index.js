@@ -49,6 +49,8 @@ import ListContactComponent from '../components/ListContact';
 
 import SidebarComponent from '../components/Sidebar';
 
+import * as firebase from 'firebase';
+
 console.disableYellowBox = true;
 
 const Index = (

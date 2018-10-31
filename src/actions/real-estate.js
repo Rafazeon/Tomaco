@@ -1,3 +1,4 @@
+import statusMessage from './status';
 import { Firebase, FirebaseRef } from '../lib/firebase';
 import * as firebase from 'firebase';
 import { array } from 'lodash/array';
@@ -11,7 +12,6 @@ const key = "AIzaSyCrCsmgenHNfYgkdjXIn8AShOEXbksbX8M"
 export function createRealEstate(formData) {
   const {
     id,
-    userId,
     title,
     description,
     bedrooms,
@@ -41,7 +41,6 @@ export function createRealEstate(formData) {
 
     ref.set({
             id: key,
-            userId,
             title, 
             description,
             bedrooms,

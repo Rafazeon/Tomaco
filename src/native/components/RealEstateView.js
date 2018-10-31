@@ -65,23 +65,23 @@ const RealEstateView = ({
         }
         <Card>
           <CardItem style={{height: 300}}>
+           
           {latlong.results &&
             <MapView
             style={styles.map}
               initialRegion={{
-                latitude: !imobi.address ? -24.9637052 : latlong.results[0].geometry.location.lat,  
-                longitude: !imobi.address ? -53.6124374 : latlong.results[0].geometry.location.lng,
+                latitude: !imobi.address ? -24.9637052 : latlong.results[0] && latlong.results[0].geometry.location.lat,  
+                longitude: !imobi.address ? -53.6124374 : latlong.results[0] && latlong.results[0].geometry.location.lng,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               }}
             ><MapView.Marker 
               coordinate={{
-                latitude: !imobi.address ? -24.9637052 : latlong.results[0].geometry.location.lat,
-                longitude: !imobi.address ? -53.6124374 : latlong.results[0].geometry.location.lng
+                latitude: !imobi.address ? -24.9637052 : latlong.results[0] && latlong.results[0].geometry.location.lat,
+                longitude: !imobi.address ? -53.6124374 : latlong.results[0] && latlong.results[0].geometry.location.lng
               }} />
             </MapView>
           }
-
            </CardItem>
         </Card>
         

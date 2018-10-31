@@ -22,6 +22,7 @@ const UpdateRealEstate = ({
     imobi={member.imobi}
     onFormSubmit={onFormSubmit}
     Create={true}
+    user={member}
   />
 );
 
