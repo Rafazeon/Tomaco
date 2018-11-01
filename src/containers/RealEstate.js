@@ -44,7 +44,9 @@ class RealEstate extends Component {
         this.props.getRealEstateWithFilters()
     }
     this.props.getEmployee()
-    this.props.getFavorite()
+    this.props.getFavorite().then(response => {
+      console.log(response)
+    })
     this.props.getMemberData()
   }
   

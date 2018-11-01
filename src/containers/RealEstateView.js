@@ -3,10 +3,11 @@ import { Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
+import * as firebase from 'firebase';
 
 import { getRealEstateWithFilters, setError, setRealEstate, getRealEstate } from '../actions/real-estate';
 import { getEmployee, getMemberData } from '../actions/member';
-import { setFavorite } from '../actions/favorite';
+import { createFavorite, setFavorite, deleteFavorite } from '../actions/favorite';
 import { createContact } from '../actions/contact';
 
 class RealEstate extends Component {
@@ -67,7 +68,7 @@ class RealEstate extends Component {
         status: this.state.status
     }
     
-    this.props.setFavorite(obj)
+    return this.props.setFavorite(obj)
   }
 
   sendContact(imobi) {
@@ -124,7 +125,6 @@ class RealEstate extends Component {
         addFavorite={this.addFavorite}
         favoriteItem={favoriteItem}
         color={this.state.color}
-        userId={member.uid}
         latlong={latlong}
         handleChange={this.handleChange}
         sendContact={this.sendContact}
@@ -148,7 +148,9 @@ const mapDispatchToProps = {
   setError,
   onFormSubmit: setRealEstate,
   getEmployee,
+  createFavorite,
   setFavorite,
+  deleteFavorite,
   getMemberData,
   createContact
 };

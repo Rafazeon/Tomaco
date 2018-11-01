@@ -139,8 +139,6 @@ class SignUp extends React.Component {
             <Item stackedLabel>
               <Label>Imobiliária</Label>
               <Input
-                autoCapitalize="none"
-                keyboardType="email-address"
                 onChangeText={v => this.handleChange('imobi', v)}
               />
             </Item>

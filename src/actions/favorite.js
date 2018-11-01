@@ -39,21 +39,42 @@ export function setFavorite(formData) {
         return dispatch => new Promise(async (resolve, reject) => {
         // Write the new post's data simultaneously in the posts list and the user's post list.
         var updates = {};
-        updates['/favorite/' + id] = formData;
+        updates['/favorite/' + id + userId] = formData;
+        
         return firebase.database().ref().update(updates);
         })
     }
-
+    
+// FILTRA PELO FAVORITO DO USUÁRIO
 export function getFavorite() {
     if (Firebase === null) return () => new Promise(resolve => resolve());
   
-    return dispatch => new Promise(resolve => FirebaseRef.child('favorite')
+    return dispatch => new Promise(resolve => FirebaseRef.child('favorite').orderByChild('status').equalTo(true)
       .on('value', (snapshot) => {
-          const favorite = snapshot.val() || {};
-          const favoritelist = Object.values(favorite);
-          return resolve(dispatch({
-            type: 'GET_FAVORITE',
-            data: favoritelist
-          }));
-      })).catch(e => console.log(e)); 
+            var userIdCurrent = firebase.auth().currentUser && firebase.auth().currentUser.uid
+            var favorite = snapshot.val() || {};
+            var favoritelist = Object.values(favorite);
+            var filter = favoritelist.filter((item) => {
+                return item.userId == userIdCurrent
+            })
+            return resolve(dispatch({
+                type: 'GET_FAVORITE',
+                data: filter
+            })); 
+      })).catch(e => console.log(e));  
   }
+
+  export function deleteFavorite(formData) {
+    const {
+        id,
+        userId,
+        imobiId,
+        email,
+        status
+      } = formData;
+    
+      return dispatch => new Promise(async (resolve, reject) => {
+        // Write the new post's data simultaneously in the posts list and the user's post list.
+        return firebase.database().ref('/favorite/' + id).remove();
+      })
+    }

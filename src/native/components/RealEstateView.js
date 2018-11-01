@@ -19,7 +19,6 @@ const RealEstateView = ({
   realestateId,
   addFavorite,
   favoriteItem,
-  userId,
   latlong,
   handleChange,
   sendContact
@@ -51,11 +50,12 @@ const RealEstateView = ({
         "https://firebasestorage.googleapis.com/v0/b/imobi-cbf7c.appspot.com/o/Images%2F" + item.modificationDate + "?alt=media"
       )} /> 
         <Spacer size={25} />
+         
         {!!firebase.auth().currentUser &&
-        <TouchableOpacity onPress={() => addFavorite(imobi.id)}>
+        <TouchableOpacity onPress={() => addFavorite(imobi.id) }>
         <Card>
           <CardItem>
-          <Icon style={{position: 'relative', top: 8}} name="star" size={20} color={favorite && favorite.userId == userId && favorite.status == true ? 'red' : 'gray'} />
+          <Icon style={{position: 'relative', top: 8}} name="star" size={20} color={favorite && favorite.userId == firebase.auth().currentUser.uid && favorite.status == true ? 'red' : 'gray'} />
           <Body>
             <Text style={{fontWeight: '500', marginTop: 15, fontSize: 13}}>  Adicionar ao Favoritos</Text>
           </Body>
@@ -174,7 +174,10 @@ const RealEstateView = ({
 
             <Item stackedLabel>
               <Label>E-mail</Label>
-              <Input onChangeText={v => handleChange('email', v)} />
+              <Input 
+              autoCapitalize="none"
+              keyboardType="email-address"
+              onChangeText={v => handleChange('email', v)} />
             </Item>
 
             <Item stackedLabel>

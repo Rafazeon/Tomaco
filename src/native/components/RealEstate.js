@@ -24,7 +24,6 @@ const RealEstate = ({
   params,
   favorite,
   fav,
-  userId,
   getLatLong
 }) => {
   // Loading
@@ -53,12 +52,18 @@ const RealEstate = ({
       })
 
     }else if(fav == true) {
-      return item.filter((home, index) => {
-        if(favorite[index].status == fav && favorite[index].userId == userId) {
-          return item
-        }
+      var arr = []
+      for(var i = 0; i < favorite.length; i++) {
+        item.filter((home) => {
+          if(favorite[i].imobiId == home.id) {
+            arr.push(home)
+          }
+        })
+      }
+      return arr.filter((item) => {
+        return item
       })
-
+    
     }else{ 
       return item
     }
