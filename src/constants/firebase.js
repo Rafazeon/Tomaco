@@ -1,10 +1,10 @@
 export default {
-  apiKey: "AIzaSyDxUNYI9_eNkEAAZRJmz8QjDEsG2Fu-zxY",
-  authDomain: "imobi-cbf7c.firebaseapp.com",
-  databaseURL: "https://imobi-cbf7c.firebaseio.com",
-  projectId: "imobi-cbf7c",
-  storageBucket: "imobi-cbf7c.appspot.com",
-  messagingSenderId: "622442594569"
+  apiKey: "AIzaSyBbyMGV1_4J77S9l6UgFgNkiHbgiHa3oaQ",
+  authDomain: "real-estate-9ff9e.firebaseapp.com",
+  databaseURL: "https://real-estate-9ff9e.firebaseio.com",
+  projectId: "real-estate-9ff9e",
+  storageBucket: "real-estate-9ff9e.appspot.com",
+  messagingSenderId: "552083256303"
 };
 
     
