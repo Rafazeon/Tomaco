@@ -3,7 +3,6 @@ import { Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import * as firebase from 'firebase';
 
 import { getRealEstateWithFilters, setError, setRealEstate, getRealEstate } from '../actions/real-estate';
 import { getEmployee, getMemberData } from '../actions/member';

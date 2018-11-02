@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import OneSignal from 'react-native-onesignal'; // Import package from node modules
 
 import { getRealEstateWithFilters, setError, setRealEstate, getRealEstate, getRealEstateMap, cleanRealEstateMap } from '../actions/real-estate';
 import { getEmployee, getMemberData } from '../actions/member';
@@ -28,6 +29,11 @@ class RealEstate extends Component {
 
   constructor(props) {
     super(props)
+    OneSignal.init("2c855fb8-935d-4e0f-9678-1b1c1f81f3a9");
+
+    OneSignal.addEventListener('received', this.onReceived);
+    OneSignal.addEventListener('opened', this.onOpened);
+    OneSignal.addEventListener('ids', this.onIds);
 
     this.getLatLong = this.getLatLong.bind(this)
   }
@@ -48,6 +54,27 @@ class RealEstate extends Component {
       console.log(response)
     })
     this.props.getMemberData()
+  }
+
+  componentWillUnmount() {
+    OneSignal.removeEventListener('received', this.onReceived);
+    OneSignal.removeEventListener('opened', this.onOpened);
+    OneSignal.removeEventListener('ids', this.onIds);
+  }
+
+  onReceived(notification) {
+    console.log("Notification received: ", notification);
+  }
+
+  onOpened(openResult) {
+    console.log('Message: ', openResult.notification.payload.body);
+    console.log('Data: ', openResult.notification.payload.additionalData);
+    console.log('isActive: ', openResult.notification.isAppInFocus);
+    console.log('openResult: ', openResult);
+  }
+
+  onIds(device) {
+    console.log('Device info: ', device);
   }
   
   /**
