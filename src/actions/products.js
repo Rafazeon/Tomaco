@@ -64,7 +64,7 @@ export function createProductOffer(formData) {
             quantidade,
             entrega,
             validade,
-            pre1co
+            preco
           }).then(() => statusMessage(dispatch, 'loading', false)
           .then(resolve))
       .catch(reject);

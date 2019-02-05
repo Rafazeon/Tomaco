@@ -89,35 +89,29 @@ class CreateProduct extends React.Component {
   }
 
   render() {
-    const { loading, error } = this.props;
     const { categories } = this.props
-
-    // Loading
-    if (loading) return <Loading />;
 
     return (
       <Container>
         <Content padder>
-        <Dropdown
-          label='Selecione o tipo de alimento'
-          data={categories}
-          onChangeText={v => this.handleChange('category', v)}
-        />
+          <Form>  
+            <Dropdown
+                label='Selecione o tipo de alimento'
+                data={categories}
+                onChangeText={v => this.handleChange('category', v)}
+              />
 
-          <Form>
-            <Item stackedLabel>
-              <Label>Nome</Label>
-              <Input onChangeText={v => this.handleChange('name', v)} />
-            </Item>
+              <Item stackedLabel>
+                <Label>Nome</Label>
+                <Input onChangeText={v => this.handleChange('name', v)} />
+              </Item>
 
-            <Item stackedLabel>
-              <Label>Preço</Label>
-              <Input onChangeText={v => this.handleChange('price', v)} />
-            </Item>
+              <Item stackedLabel>
+                <Label>Preço</Label>
+                <Input onChangeText={v => this.handleChange('price', v)} />
+              </Item>
 
-            <Spacer size={20} />
-
-            <Button value={this.state.image} style={{width: "50%", marginLeft: 'auto', marginRight: 'auto', marginTop: 20, marginBottom: 20 }} block onPress={ this.pickMultiple.bind(this) }><Text>Enviar Foto </Text></Button>
+            <Button style={{width: "50%", marginLeft: 'auto', marginRight: 'auto', marginTop: 20, marginBottom: 20 }} block onPress={ this.pickMultiple.bind(this) }><Text>Enviar Foto </Text></Button>
 
             <Button style={{marginBottom: 20}} block onPress={this.handleSubmit}>
               <Text>Cadastrar</Text>

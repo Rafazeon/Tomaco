@@ -34,6 +34,7 @@ class OfferProduct extends Component {
               <CardItem cardBody>
                 <TouchableOpacity onPress={() => onPress(item)} style={{ flex: 1 }}>
                 <Card style={{padding: 5}}> 
+                {item.image &&
                   <Image
                     source={{ uri: "https://firebasestorage.googleapis.com/v0/b/copyagro-d9155.appspot.com/o/Images%2F" + item.image.modificationDate + "?alt=media" }} width={200} height={200}
                     style={{
@@ -43,6 +44,7 @@ class OfferProduct extends Component {
                       borderRadius: 5
                     }}
                   />
+                }
                   </Card> 
                 </TouchableOpacity>
               </CardItem>

@@ -8,7 +8,8 @@ class OfferProductView extends Component {
         super(props)
 
         this.state = {
-            produto: this.props.item.name
+            produto: this.props.item.name,
+            fornecedor: 'Marcio'
         }
 
         this.handleChange = this.handleChange.bind(this)
