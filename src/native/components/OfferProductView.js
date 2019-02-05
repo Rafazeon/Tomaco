@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import { Image } from 'react-native'
 import { Container, Content, Text, CardItem , Card, Button, Body, Label, Item, Form, Input } from 'native-base';
 import TextInputMask from 'react-native-text-input-mask';
+import { Actions } from 'react-native-router-flux';
 class OfferProductView extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            name: this.props.item.name
+            produto: this.props.item.name
         }
 
         this.handleChange = this.handleChange.bind(this)
@@ -22,13 +23,12 @@ class OfferProductView extends Component {
 
     handleSubmit = () => {
         this.props.onFormSubmit(this.state)
-          .then(() => Actions.login())
-          .catch(e => console.log(`Error: ${e}`));
+        Actions.offerProduct()
       }
 
     render() {
         const { item } = this.props
-        console.log(item)
+        console.log(this.state)
         return(
             <Container>
                 <Content padder>
@@ -43,44 +43,39 @@ class OfferProductView extends Component {
                     />
 
                     <Item stackedLabel>
-                    <Label>Fornecedor</Label>
-                    <Input onChangeText={v => this.handleChange('provider', v)} />
-                    </Item>
-
-                    <Item stackedLabel>
                     <Label>Lote</Label>
-                    <Input onChangeText={v => this.handleChange('lot', v)} />
+                    <Input onChangeText={v => this.handleChange('lote', v)} />
                     </Item>
 
                     <Item stackedLabel>
                     <Label>Medida</Label>
-                    <Input onChangeText={v => this.handleChange('measure', v)} />
+                    <Input onChangeText={v => this.handleChange('medida', v)} />
                     </Item>
                     
                     <Item stackedLabel>
                     <Label>Quantidade</Label>
-                    <Input onChangeText={v => this.handleChange('amount', v)} />
+                    <Input onChangeText={v => this.handleChange('quantidade', v)} />
                     </Item>
 
                     <Item stackedLabel>
-                    <Label>Data Início</Label>
+                    <Label>Entrega</Label>
                     <TextInputMask 
                     style={{marginLeft: 20, marginRight: 20, width: '100%'}}
                     refInput={ref => { this.input = ref }}
                     onChangeText={(formatted, extracted) => {
-                        this.handleChange('date_start', extracted)
+                        this.handleChange('entrega', extracted)
                     }}
                     mask={"[00]/[00]/[0000]"}  />
 
                     </Item>
 
                     <Item stackedLabel>
-                    <Label>Data Fim</Label>
+                    <Label>Validade</Label>
                     <TextInputMask 
                     style={{marginLeft: 20, marginRight: 20, width: '100%'}}
                     refInput={ref => { this.input = ref }}
                     onChangeText={(formatted, extracted) => {
-                        this.handleChange('date_finish', extracted)
+                        this.handleChange('validade', extracted)
                     }}
                     mask={"[00]/[00]/[0000]"}  />
                     </Item>
@@ -90,7 +85,7 @@ class OfferProductView extends Component {
                     <Input
                         autoCapitalize="none"
                         placeholder="R$"
-                        onChangeText={v => this.handleChange('price', v)}
+                        onChangeText={v => this.handleChange('preco', v)}
                     />
                     </Item>
 

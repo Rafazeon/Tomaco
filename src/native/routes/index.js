@@ -4,9 +4,6 @@ import { Icon } from 'native-base';
 
 import DefaultProps from '../constants/navigation';
 
-import RecipesContainer from '../../containers/Recipes';
-import RecipeViewComponent from '../components/Recipe';
-
 import SignUpContainer from '../../containers/SignUp';
 import SignUpComponent from '../components/SignUp';
 
@@ -19,8 +16,6 @@ import ForgotPasswordComponent from '../components/ForgotPassword';
 import UpdateProfileContainer from '../../containers/UpdateProfile';
 import UpdateProfileComponent from '../components/UpdateProfile';
 
-
-import DeleteRealEstateContainer from '../../containers/DeleteRealEstate';
 
 import CreateCategoryContainer from '../../containers/CreateCategory';
 import CreateCategoryComponent from '../components/CreateCategory';
@@ -37,28 +32,13 @@ import OfferProductComponent from '../components/OfferProduct';
 import OfferProductViewContainer from '../../containers/OfferProductView';
 import OfferProductViewComponent from '../components/OfferProductView';
 
-import RealEstateViewContainer from '../../containers/RealEstateView';
-import RealEstateViewComponent from '../components/RealEstateView';
-
-
-import UpdateRealEstateContainer from '../../containers/UpdateRealEstate';
-import UpdateRealEstateComponent from '../components/UpdateRealEstate';
+import listOrderContainer from '../../containers/ListOrder';
+import listOrderComponent from '../components/ListOrder';
 
 import MemberContainer from '../../containers/Member';
 import ProfileComponent from '../components/Profile';
 
-import FilterViewContainer from '../../containers/FilterView';
-import FilterViewComponent from '../components/FilterView';
-
-import ListEmployeeContainer from '../../containers/ListEmployee';
-import ListEmployeeComponent from '../components/ListEmployee';
-
-import ListContactContainer from '../../containers/ListContact';
-import ListContactComponent from '../components/ListContact';
-
 import SidebarComponent from '../components/Sidebar';
-
-import * as firebase from 'firebase';
 
 console.disableYellowBox = true;
 
@@ -139,39 +119,12 @@ const Index = (
             component={UpdateProfileContainer}
             Layout={UpdateProfileComponent}
           />
-          <Scene
-            back
-            key="updateRealEstate"
-            title="CADASTRAR IMÓVEL"
-            {...DefaultProps.navbarProps}
-            component={UpdateRealEstateContainer}
-            Layout={UpdateRealEstateComponent}
-          />
+  
         </Stack>
       </Tabs>
 
       </Drawer> 
     </Scene>
-      
-    <Scene
-      back
-      clone
-      key="recipe"
-      title="RECIPE"
-      {...DefaultProps.navbarProps}
-      component={RecipesContainer}
-      Layout={RecipeViewComponent}
-    />
-
-    <Scene
-      back
-      clone
-      key="imobi"
-      title="IMÓVEL"
-      {...DefaultProps.navbarProps}
-      component={RealEstateViewContainer}
-      Layout={RealEstateViewComponent}
-    />
 
     <Scene
       back
@@ -226,41 +179,11 @@ const Index = (
     <Scene
       back
       clone
-      key="imobiDelete"
-      title="DELETAR IMÓVEL"
+      key="listOrder"
+      title="LISTA DOS PEDIDOS"
       {...DefaultProps.navbarProps}
-      component={DeleteRealEstateContainer}
-      Layout={UpdateRealEstateComponent}
-    />
-
-    <Scene
-      back
-      clone
-      key="employee"
-      title="LISTA FUNCIONÁRIOS"
-      {...DefaultProps.navbarProps}
-      component={ListEmployeeContainer}
-      Layout={ListEmployeeComponent}
-    />
-
-    <Scene
-      back
-      clone
-      key="contact"
-      title="LISTA CONTATOS"
-      {...DefaultProps.navbarProps}
-      component={ListContactContainer}
-      Layout={ListContactComponent}
-    />
-    
-    <Scene
-      back
-      clone
-      key="filterOne"
-      title="FILTROS"
-      {...DefaultProps.navbarProps}
-      component={FilterViewContainer}
-      Layout={FilterViewComponent}
+      component={listOrderContainer}
+      Layout={listOrderComponent}
     />
 
   </Stack>

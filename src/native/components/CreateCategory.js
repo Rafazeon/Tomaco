@@ -35,11 +35,11 @@ class CreateCategory extends React.Component {
       ...this.state,
       [name]: val,
     });
-  }
+  } 
 
   handleSubmit = () => {
     this.props.onFormSubmit(this.state)
-      .then(() => Actions.profile())
+      .then(Actions.createProduct())
       .catch(e => console.log(`Error: ${e}`));
   }
 

@@ -1,4 +1,4 @@
-import Store from '../store/real-estate';
+import Store from '../store/favorite';
 
 export const initialState = Store;
 

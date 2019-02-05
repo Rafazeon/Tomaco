@@ -46,7 +46,7 @@ class CreateProduct extends React.Component {
 
   handleSubmit = () => {
     this.props.onFormSubmit(this.state)
-      .then(() => Actions.profile())
+      .then(Actions.listProduct())
       .catch(e => console.log(`Error: ${e}`));
   }
 

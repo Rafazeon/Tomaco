@@ -44,7 +44,7 @@ class Menu extends Component {
 
             {!!firebase.auth().currentUser && this.props.member.role == 'Employee' && 
             <View>
-                <ListItem onPress={() => Actions.createCategory({params: this.props.member})}>  
+                <ListItem onPress={() => Actions.createCategory()}>  
                 <Left>
                     {/* <Image source={require('../../images/relatory.png')} /> */}
                     <Text style={styles.title}>    Cadastro de Categoria</Text>
@@ -54,7 +54,7 @@ class Menu extends Component {
                 </Right>
                 </ListItem>
 
-                <ListItem onPress={() => Actions.createProduct({params: this.props.member})}>  
+                <ListItem onPress={() => Actions.createProduct()}>  
                 <Left>
                     {/* <Image source={require('../../images/relatory.png')} /> */}
                     <Text style={styles.title}>    Cadastro de Produto</Text>
@@ -64,7 +64,7 @@ class Menu extends Component {
                 </Right>
                 </ListItem>
 
-                <ListItem onPress={() => Actions.listProduct({params: this.props.member})}>
+                <ListItem onPress={() => Actions.listProduct()}>
                 <Left>
                     {/* <Image source={require('../../images/relatory.png')} /> */}
                     <Text style={styles.title}>    Marcar Produtos</Text>
@@ -74,7 +74,7 @@ class Menu extends Component {
                 </Right>
                 </ListItem>
 
-                <ListItem onPress={() => Actions.offerProduct({params: this.props.member})}>
+                <ListItem onPress={() => Actions.offerProduct()}>
                 <Left>
                     {/* <Image source={require('../../images/relatory.png')} /> */}
                     <Text style={styles.title}>    Ofertar Produtos</Text>
@@ -84,7 +84,7 @@ class Menu extends Component {
                 </Right>
                 </ListItem>
 
-                <ListItem onPress={() => Actions.employee({params: this.props.member})}>
+                <ListItem onPress={() => Actions.listOrder()}>
                 <Left>
                     {/* <Image source={require('../../images/relatory.png')} /> */}
                     <Text style={styles.title}>    Demandar Produtos</Text>

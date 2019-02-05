@@ -7,18 +7,10 @@ import { login } from '../actions/member';
 const Login = ({
   Layout,
   onFormSubmit,
-  member,
-  isLoading,
-  infoMessage,
-  errorMessage,
-  successMessage,
+  member
 }) => (
   <Layout
     member={member}
-    loading={isLoading}
-    info={infoMessage}
-    error={errorMessage}
-    success={successMessage}
     onFormSubmit={onFormSubmit}
   />
 );
@@ -26,25 +18,11 @@ const Login = ({
 Login.propTypes = {
   Layout: PropTypes.func.isRequired,
   member: PropTypes.shape({}).isRequired,
-  onFormSubmit: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  infoMessage: PropTypes.string,
-  errorMessage: PropTypes.string,
-  successMessage: PropTypes.string,
-};
-
-Login.defaultProps = {
-  infoMessage: null,
-  errorMessage: null,
-  successMessage: null,
+  onFormSubmit: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  member: state.member || {},
-  isLoading: state.status.loading || false,
-  infoMessage: state.status.info || null,
-  errorMessage: state.status.error || null,
-  successMessage: state.status.success || null,
+  member: state.member || {}
 });
 
 const mapDispatchToProps = {

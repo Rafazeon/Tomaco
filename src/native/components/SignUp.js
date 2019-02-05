@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Image } from 'react-native';
 import { Container, Content, Text, Form, Item, Label, Input, Button } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import Loading from './Loading';
 import Messages from './Messages';
 import Header from './Header';
 import Spacer from './Spacer';
@@ -11,11 +10,11 @@ import * as firebase from 'firebase';
 import RNFetchBlob from 'react-native-fetch-blob';
 import ImagePicker from 'react-native-image-crop-picker';
 import RadioGroup from 'react-native-radio-buttons-group';
+import TextInputMask from 'react-native-text-input-mask';
 
 class SignUp extends React.Component {
   static propTypes = {
     error: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
     onFormSubmit: PropTypes.func.isRequired,
   }
 
@@ -114,12 +113,9 @@ class SignUp extends React.Component {
   onPress = data => this.setState({ data });
 
   render() {
-    const { loading, error } = this.props;
     let selectedButton = this.state.data.find(e => e.selected == true);
     selectedButton = selectedButton ? selectedButton.value : this.state.data[0].label;
     console.log(this.state.image)
-    // Loading
-    if (loading) return <Loading />;
 
     return (
       <Container>
@@ -128,8 +124,6 @@ class SignUp extends React.Component {
             title="Bem Vindo"
             content="Faça seu registro aqui"
           />
-
-          {error && <Messages message={error} />}
 
           <Form>
           {this.state.image ? 
@@ -147,7 +141,14 @@ class SignUp extends React.Component {
               
             <Item stackedLabel>
               <Label>{selectedButton}</Label>
-              <Input onChangeText={v => this.handleChange(selectedButton == 'CPF' ? 'cpf' : 'cnpj', v)} /> 
+              <TextInputMask 
+                    style={{marginLeft: 20, marginRight: 20, width: '100%'}}
+                    refInput={ref => { this.input = ref }}
+                    onChangeText={(formatted, extracted) => {
+                        this.handleChange(selectedButton == 'CPF' ? 'cpf' : 'cnpj', extracted)
+                    }}
+                    mask={selectedButton == 'CPF' ? '[000].[000].[000]-[00]' : '[00].[000].[000]/[0000].[00]' }  />
+              <Input  /> 
             </Item>
               
             

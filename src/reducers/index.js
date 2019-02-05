@@ -1,10 +1,9 @@
-import status from './status';
 import member from './member';
-import recipes from './recipes';
 import categories from './categories';
 import products from './products';
 import favorite from './favorite';
 import contact from './contact';
+import orders from './orders';
 
 const rehydrated = (state = false, action) => {
   switch (action.type) {
@@ -18,11 +17,10 @@ const rehydrated = (state = false, action) => {
 
 export default {
   rehydrated,
-  status,
   member,
-  recipes,
   categories,
   products,
   favorite,
-  contact
+  contact,
+  orders
 };

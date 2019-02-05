@@ -12,9 +12,7 @@ class ForgotPassword extends React.Component {
     member: PropTypes.shape({
       email: PropTypes.string,
     }),
-    error: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
-    onFormSubmit: PropTypes.func.isRequired,
+    onFormSubmit: PropTypes.func.isRequired
   }
 
   static defaultProps = {
@@ -46,11 +44,6 @@ class ForgotPassword extends React.Component {
   }
 
   render() {
-    const { loading, error } = this.props;
-
-    // Loading
-    if (loading) return <Loading />;
-
     return (
       <Container>
         <Content padder>
@@ -58,8 +51,6 @@ class ForgotPassword extends React.Component {
             title="Recuperar Senha"
             content="Digite Seu Email"
           />
-
-          {error && <Messages message={error} />}
 
           <Form>
             <Item stackedLabel>
