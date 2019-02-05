@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { createRealEstate } from '../actions/real-estate';
+import { createRealEstate } from '../actions/products';
 
 const UpdateRealEstate = ({
   Layout,

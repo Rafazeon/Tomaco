@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getRealEstate, setError, setRealEstate, deleteRealEstate } from '../actions/real-estate';
+import { getRealEstate, setError, setRealEstate, deleteRealEstate } from '../actions/products';
 
 class DeleteRealEstate extends Component {
   static propTypes = {

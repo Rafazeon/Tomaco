@@ -41,65 +41,62 @@ class Menu extends Component {
         </ImageBackground>
         </View>
             <List style={{marginTop: '5%'}}>
-            {!!firebase.auth().currentUser && this.props.member.imobi ?
+
+            {!!firebase.auth().currentUser && this.props.member.role == 'Employee' && 
             <View>
-                <ListItem onPress={() => Actions.realestate()}>
+                <ListItem onPress={() => Actions.createCategory({params: this.props.member})}>  
                 <Left>
-                    {/* <Icon 
-                    name='dumbbell'
-                    style={{ fontSize: 20, color: 'red' }} /> */}
-                    {/* <Image source={require('../../images/dumbbell.png')} /> */}
-                    <Text style={styles.title}>    Todos Imóveis</Text>
+                    {/* <Image source={require('../../images/relatory.png')} /> */}
+                    <Text style={styles.title}>    Cadastro de Categoria</Text>
                 </Left>
                 <Right>
                     <Icon family='FontAwesome' name="arrow-right" />
                 </Right>
                 </ListItem>
 
-                <ListItem onPress={() => Actions.realestate({params: this.props.member.imobi})}>
+                <ListItem onPress={() => Actions.createProduct({params: this.props.member})}>  
                 <Left>
-                    {/* <Icon 
-                    name='dumbbell'
-                    style={{ fontSize: 20, color: 'red' }} /> */}
-                    {/* <Image source={require('../../images/dumbbell.png')} /> */}
-                    <Text style={styles.title}>    Meus Imóveis</Text>
+                    {/* <Image source={require('../../images/relatory.png')} /> */}
+                    <Text style={styles.title}>    Cadastro de Produto</Text>
                 </Left>
                 <Right>
                     <Icon family='FontAwesome' name="arrow-right" />
                 </Right>
                 </ListItem>
 
-                <ListItem onPress={() => Actions.contact({params: this.props.member.imobi})}>
+                <ListItem onPress={() => Actions.listProduct({params: this.props.member})}>
                 <Left>
-                    {/* <Icon 
-                    name='dumbbell'
-                    style={{ fontSize: 20, color: 'red' }} /> */}
-                    {/* <Image source={require('../../images/dumbbell.png')} /> */}
-                    <Text style={styles.title}>    Meus Contatos</Text>
+                    {/* <Image source={require('../../images/relatory.png')} /> */}
+                    <Text style={styles.title}>    Marcar Produtos</Text>
                 </Left>
                 <Right>
                     <Icon family='FontAwesome' name="arrow-right" />
                 </Right>
                 </ListItem>
 
+                <ListItem onPress={() => Actions.offerProduct({params: this.props.member})}>
+                <Left>
+                    {/* <Image source={require('../../images/relatory.png')} /> */}
+                    <Text style={styles.title}>    Ofertar Produtos</Text>
+                </Left>
+                <Right>
+                    <Icon family='FontAwesome' name="arrow-right" />
+                </Right>
+                </ListItem>
 
-            {this.props.member.role == 'Admin' && 
                 <ListItem onPress={() => Actions.employee({params: this.props.member})}>
                 <Left>
                     {/* <Image source={require('../../images/relatory.png')} /> */}
-                    <Text style={styles.title}>    Meus Funcionários</Text>
+                    <Text style={styles.title}>    Demandar Produtos</Text>
                 </Left>
                 <Right>
                     <Icon family='FontAwesome' name="arrow-right" />
                 </Right>
                 </ListItem>
-            }
             </View>
+            }
             
-            :
-            
-            <View>
-            {!!firebase.auth().currentUser && this.props.member.role == 'User' ?
+            {!!firebase.auth().currentUser && this.props.member.role == 'User' &&
             <View>
                 <ListItem onPress={() => Actions.realestate()}>
                 <Left>
@@ -107,7 +104,7 @@ class Menu extends Component {
                     name='dumbbell'
                     style={{ fontSize: 20, color: 'red' }} /> */}
                     {/* <Image source={require('../../images/dumbbell.png')} /> */}
-                    <Text style={styles.title}>    Todos Imóveis</Text>
+                    <Text style={styles.title}>    Novo Pedido</Text>
                 </Left>
                 <Right>
                     <Icon family='FontAwesome' name="arrow-right" />
@@ -120,16 +117,30 @@ class Menu extends Component {
                     name='dumbbell'
                     style={{ fontSize: 20, color: 'red' }} /> */}
                     {/* <Image source={require('../../images/dumbbell.png')} /> */}
-                    <Text style={styles.title}>    Meus Favoritos</Text>
+                    <Text style={styles.title}>    Meus Pedidos</Text>
+                </Left>
+                <Right>
+                    <Icon family='FontAwesome' name="arrow-right" />
+                </Right>
+                </ListItem>
+
+                <ListItem onPress={() => Actions.realestate({fav: true})}>
+                <Left>
+                    {/* <Icon 
+                    name='dumbbell'
+                    style={{ fontSize: 20, color: 'red' }} /> */}
+                    {/* <Image source={require('../../images/dumbbell.png')} /> */}
+                    <Text style={styles.title}>    Lista de Produtos</Text>
                 </Left>
                 <Right>
                     <Icon family='FontAwesome' name="arrow-right" />
                 </Right>
                 </ListItem>
             </View>
-
-                :
-
+            }
+                
+                {!!firebase.auth().currentUser && this.props.member.role == '' &&
+                <View>
                 <ListItem>
                 <Left>
                     {/* <Icon 
@@ -142,9 +153,9 @@ class Menu extends Component {
                     <Icon family='FontAwesome' name="arrow-right" />
                 </Right>
                 </ListItem>
+                </View>
             }
-            </View>      
-            }
+            
 
             {/* <ListItem>
               <Left>

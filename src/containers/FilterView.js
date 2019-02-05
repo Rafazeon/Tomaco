@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { setRealEstateFilters, cleanRealEstateFilters } from '../actions/real-estate';
+import { setRealEstateFilters, cleanRealEstateFilters } from '../actions/products';
 
 class FilterView extends Component {
   static propTypes = {
@@ -28,7 +28,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    setRealEstateFilters,
+    setRealEstateFilters, 
     cleanRealEstateFilters
 };
 

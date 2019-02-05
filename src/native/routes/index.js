@@ -10,9 +10,6 @@ import RecipeViewComponent from '../components/Recipe';
 import SignUpContainer from '../../containers/SignUp';
 import SignUpComponent from '../components/SignUp';
 
-import SignUpUserContainer from '../../containers/SignUpUser';
-import SignUpUserComponent from '../components/SignUpUser';
-
 import LoginContainer from '../../containers/Login';
 import LoginComponent from '../components/Login';
 
@@ -25,8 +22,20 @@ import UpdateProfileComponent from '../components/UpdateProfile';
 
 import DeleteRealEstateContainer from '../../containers/DeleteRealEstate';
 
-import RealEstateContainer from '../../containers/RealEstate';
-import RealEstateComponent from '../components/RealEstate';
+import CreateCategoryContainer from '../../containers/CreateCategory';
+import CreateCategoryComponent from '../components/CreateCategory';
+
+import CreateProductContainer from '../../containers/CreateProduct';
+import CreateProductComponent from '../components/CreateProduct';
+
+import ListProductContainer from '../../containers/ListProduct';
+import ListProductComponent from '../components/ListProduct';
+
+import OfferProductContainer from '../../containers/OfferProduct';
+import OfferProductComponent from '../components/OfferProduct';
+
+import OfferProductViewContainer from '../../containers/OfferProductView';
+import OfferProductViewComponent from '../components/OfferProductView';
 
 import RealEstateViewContainer from '../../containers/RealEstateView';
 import RealEstateViewComponent from '../components/RealEstateView';
@@ -91,15 +100,6 @@ const Index = (
         </Stack> */}
 
         <Stack
-          key="realestate"
-          title="IMÓVEIS"
-          icon={() => <Icon name="home" {...DefaultProps.icons} />}
-          {...DefaultProps.navbarProps}
-        >
-          <Scene key="realestate" component={RealEstateContainer} Layout={RealEstateComponent} />
-        </Stack>
-
-        <Stack
           key="profile"
           title="PERFIL"
           icon={() => <Icon name="contact" {...DefaultProps.icons} />}
@@ -113,15 +113,6 @@ const Index = (
             {...DefaultProps.navbarProps}
             component={SignUpContainer}
             Layout={SignUpComponent}
-          />
-
-          <Scene
-            back
-            key="signUpUser"
-            title="CRIAR CONTA"
-            {...DefaultProps.navbarProps}
-            component={SignUpUserContainer}
-            Layout={SignUpUserComponent}
           />
 
           <Scene
@@ -185,11 +176,51 @@ const Index = (
     <Scene
       back
       clone
-      key="imobiEdit"
-      title="EDITAR IMÓVEL"
+      key="createCategory"
+      title="CRIAR NOVA CATEGORIA"
       {...DefaultProps.navbarProps}
-      component={RealEstateContainer}
-      Layout={UpdateRealEstateComponent}
+      component={CreateCategoryContainer}
+      Layout={CreateCategoryComponent}
+    />
+
+    <Scene
+      back
+      clone
+      key="createProduct"
+      title="CRIAR NOVO PRODUTO"
+      {...DefaultProps.navbarProps}
+      component={CreateProductContainer}
+      Layout={CreateProductComponent}
+    />
+
+    <Scene
+      back
+      clone
+      key="listProduct"
+      title="MARCAR PRODUTO"
+      {...DefaultProps.navbarProps}
+      component={ListProductContainer}
+      Layout={ListProductComponent}
+    />
+
+    <Scene
+      back
+      clone
+      key="offerProduct"
+      title="OFERTAR PRODUTO"
+      {...DefaultProps.navbarProps}
+      component={OfferProductContainer}
+      Layout={OfferProductComponent}
+    />
+
+    <Scene
+      back
+      clone
+      key="offerProductView"
+      title="CRIAR OFERTA PRODUTO"
+      {...DefaultProps.navbarProps}
+      component={OfferProductViewContainer}
+      Layout={OfferProductViewComponent}
     />
 
     <Scene

@@ -26,28 +26,6 @@ const Profile = ({ member, logout, updateRealEstate }) => (
                 <Text>Atualizar Perfil</Text>
               </Body>
             </ListItem>
-            
-            {member.role == 'Admin' && 
-            <ListItem onPress={Actions.signUp} icon>
-              <Left>
-                <Icon name="add-circle" />
-              </Left>
-              <Body>
-                <Text>Cadastrar Funcionário</Text>
-              </Body>
-            </ListItem>
-            }
-            
-            {member.imobi !== '' &&
-            <ListItem onPress={Actions.updateRealEstate} icon>
-              <Left>
-                <Icon name="home" />
-              </Left>
-              <Body>
-                <Text>Cadastrar Imóvel</Text>
-              </Body>
-            </ListItem>
-            }
 
             <ListItem onPress={logout} icon>
               <Left>
@@ -76,7 +54,7 @@ const Profile = ({ member, logout, updateRealEstate }) => (
               </Body>
             </ListItem>
 
-            <ListItem onPress={Actions.signUpUser} icon>
+            <ListItem onPress={Actions.signUp} icon>
               <Left>
                 <Icon name="add-circle" />
               </Left>

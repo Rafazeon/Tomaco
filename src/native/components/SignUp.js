@@ -10,6 +10,7 @@ import Spacer from './Spacer';
 import * as firebase from 'firebase';
 import RNFetchBlob from 'react-native-fetch-blob';
 import ImagePicker from 'react-native-image-crop-picker';
+import RadioGroup from 'react-native-radio-buttons-group';
 
 class SignUp extends React.Component {
   static propTypes = {
@@ -26,18 +27,33 @@ class SignUp extends React.Component {
     super(props);
     this.state = {
       firstName: '',
-      lastName: '',
-      email: '',
+      dap: '',
+      date: '',
       password: '',
       password2: '',
-      imobi: this.props.member && this.props.member.imobi,
+      car: '',
       image: '',
-      role: 'Employee'
+      licence: '',
+      cep: '',
+      city: '',
+      role: '',
+      cpf: '',
+      cnpj: '',
+      data: [
+        {
+            label: 'CPF',
+        },
+
+        {
+            label: 'CNPJ',
+        },
+      ],
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
 
   pickMultiple(){
     this.setState({ load: true })
@@ -82,6 +98,11 @@ class SignUp extends React.Component {
       ...this.state,
       [name]: val,
     });
+    if(this.state.cpf) {
+      this.setState({role: 'User'})
+    }else{
+      this.setState({role: 'Employee'})
+    }
   }
 
   handleSubmit = () => {
@@ -90,8 +111,12 @@ class SignUp extends React.Component {
       .catch(e => console.log(`Error: ${e}`));
   }
 
+  onPress = data => this.setState({ data });
+
   render() {
     const { loading, error } = this.props;
+    let selectedButton = this.state.data.find(e => e.selected == true);
+    selectedButton = selectedButton ? selectedButton.value : this.state.data[0].label;
     console.log(this.state.image)
     // Loading
     if (loading) return <Loading />;
@@ -117,14 +142,18 @@ class SignUp extends React.Component {
                 }}
               />
             : <Text></Text>}
+              <RadioGroup flexDirection='row' radioButtons={this.state.data} onPress={this.onPress} />    
+        
+              
+            <Item stackedLabel>
+              <Label>{selectedButton}</Label>
+              <Input onChangeText={v => this.handleChange(selectedButton == 'CPF' ? 'cpf' : 'cnpj', v)} /> 
+            </Item>
+              
+            
             <Item stackedLabel>
               <Label>Nome</Label>
               <Input onChangeText={v => this.handleChange('firstName', v)} />
-            </Item>
-
-            <Item stackedLabel>
-              <Label>Sobrenome</Label>
-              <Input onChangeText={v => this.handleChange('lastName', v)} />
             </Item>
 
             <Item stackedLabel>
@@ -135,14 +164,42 @@ class SignUp extends React.Component {
                 onChangeText={v => this.handleChange('email', v)}
               />
             </Item>
-            {!!firebase.auth().currentUser ? <Item></Item> :
+
             <Item stackedLabel>
-              <Label>Imobiliária</Label>
+              <Label>DAP</Label>
+              <Input onChangeText={v => this.handleChange('dap', v)} />
+            </Item>
+
+            <Item stackedLabel>
+              <Label>Validade</Label>
               <Input
-                onChangeText={v => this.handleChange('imobi', v)}
+                autoCapitalize="none"
+                onChangeText={v => this.handleChange('date', v)}
               />
             </Item>
-            }
+            
+            <Item stackedLabel>
+              <Label>CAR</Label>
+              <Input
+                onChangeText={v => this.handleChange('car', v)}
+              />
+            </Item>
+            
+
+            <Item stackedLabel>
+              <Label>Licença</Label>
+              <Input onChangeText={v => this.handleChange('licence', v)} />
+            </Item>
+
+            <Item stackedLabel>
+              <Label>CEP</Label>
+              <Input onChangeText={v => this.handleChange('cep', v)} />
+            </Item>
+
+            <Item stackedLabel>
+              <Label>Cidade</Label>
+              <Input onChangeText={v => this.handleChange('city', v)} />
+            </Item>
 
             <Item stackedLabel>
               <Label>Senha</Label>
@@ -156,7 +213,7 @@ class SignUp extends React.Component {
 
             <Spacer size={20} />
             
-            <Button value={this.state.image} style={{width: "50%", marginLeft: 'auto', marginRight: 'auto', marginTop: 20, marginBottom: 20 }} block onPress={ this.pickMultiple.bind(this) }><Text>Enviar Logo </Text></Button>
+            <Button value={this.state.image} style={{width: "50%", marginLeft: 'auto', marginRight: 'auto', marginTop: 20, marginBottom: 20 }} block onPress={ this.pickMultiple.bind(this) }><Text>Enviar Foto </Text></Button>
 
             <Button style={{marginBottom: 20}} block onPress={this.handleSubmit}>
               <Text>Cadastrar</Text>

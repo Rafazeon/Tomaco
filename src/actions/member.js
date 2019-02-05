@@ -12,16 +12,21 @@ export function signUp(formData) {
     password,
     password2,
     firstName,
-    lastName,
-    imobi,
+    dap,
+    date,
     image,
-    role
+    role,
+    car,
+    licence,
+    cep,
+    city,
+    cpf,
+    cnpj,
   } = formData;
 
   return dispatch => new Promise(async (resolve, reject) => {
     // Validation checks
     if (!firstName) return reject({ message: ErrorMessages.missingFirstName });
-    if (!lastName) return reject({ message: ErrorMessages.missingLastName });
     if (!email) return reject({ message: ErrorMessages.missingEmail });
     if (!password) return reject({ message: ErrorMessages.missingPassword });
     if (!password2) return reject({ message: ErrorMessages.missingPassword });
@@ -37,10 +42,17 @@ export function signUp(formData) {
         if (res && res.uid) {
           FirebaseRef.child(`users/${res.uid}`).set({
             firstName,
-            lastName,
-            imobi,
+            dap,
+            date,
             image,
             role,
+            car,
+            licence,
+            cep,
+            city,
+            email,
+            cpf,
+            cnpj,
             signedUp: Firebase.database.ServerValue.TIMESTAMP,
             lastLoggedIn: Firebase.database.ServerValue.TIMESTAMP,
           }).then(() => statusMessage(dispatch, 'loading', false).then(resolve));

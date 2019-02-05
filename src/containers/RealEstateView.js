@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
-import { getRealEstateWithFilters, setError, setRealEstate, getRealEstate } from '../actions/real-estate';
+import { getRealEstateWithFilters, setError, setRealEstate, getRealEstate } from '../actions/products';
 import { getEmployee, getMemberData } from '../actions/member';
-import { createFavorite, setFavorite, deleteFavorite } from '../actions/favorite';
+import { createFavorite, setFavorite, deleteFavorite } from '../actions/favorite'; 
 import { createContact } from '../actions/contact';
 
 class RealEstate extends Component {

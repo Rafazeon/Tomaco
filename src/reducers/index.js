@@ -1,7 +1,8 @@
 import status from './status';
 import member from './member';
 import recipes from './recipes';
-import realestate from './real-estate';
+import categories from './categories';
+import products from './products';
 import favorite from './favorite';
 import contact from './contact';
 
@@ -20,7 +21,8 @@ export default {
   status,
   member,
   recipes,
-  realestate,
+  categories,
+  products,
   favorite,
   contact
 };

@@ -9,58 +9,62 @@ const key = "AIzaSyCrCsmgenHNfYgkdjXIn8AShOEXbksbX8M"
 /**
   * Sign Up to Firebase
   */
-export function createRealEstate(formData) {
+export function createProduct(formData) {
   const {
     id,
-    title,
-    description,
-    bedrooms,
-    bathrooms,
-    types_goal,
-    images, 
-    suites,
-    vacancies,
-    area,
-    cep,
-    address,
-    number,
-    complement,
-    uf,
-    city,
-    neighborhood,
+    category,
+    name,
     price,
-    imobi,
-    email,
-    photo
+    image,
+    status
   } = formData;
 
   return dispatch => new Promise(async (resolve, reject) => {
     // Go to Firebase
-    const ref = FirebaseRef.child('imobi').push()
+    const ref = FirebaseRef.child('product').push()
     const key = ref.key;
 
     ref.set({
             id: key,
-            title, 
-            description,
-            bedrooms,
-            bathrooms,
-            types_goal,
-            images,
-            suites,
-            vacancies,
-            area,
-            cep,
-            address,
-            number,
-            complement,
-            uf,
-            city,
-            neighborhood,
+            category,
+            name,
             price,
-            imobi,  
-            email,
-            photo
+            image,
+            status
+          }).then(() => statusMessage(dispatch, 'loading', false)
+          .then(resolve))
+      .catch(reject);
+  }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
+}
+
+export function createProductOffer(formData) {
+  const {
+    id,
+    name,
+    provider,
+    lot,
+    measure,
+    amount,
+    date_start,
+    date_finish,
+    price
+  } = formData;
+
+  return dispatch => new Promise(async (resolve, reject) => {
+    // Go to Firebase
+    const ref = FirebaseRef.child('product_offer').push()
+    const key = ref.key;
+
+    ref.set({
+            id: key,
+            name,
+            provider,
+            lot,
+            measure,
+            amount,
+            date_start,
+            date_finish,
+            price
           }).then(() => statusMessage(dispatch, 'loading', false)
           .then(resolve))
       .catch(reject);
@@ -74,16 +78,30 @@ export function setError(message) {
   })));
 }
 
-export function getRealEstate() {
+export function getProduct() {
   if (Firebase === null) return () => new Promise(resolve => resolve());
 
-  return dispatch => new Promise(resolve => FirebaseRef.child('imobi')
+  return dispatch => new Promise(resolve => FirebaseRef.child('product')
     .on('value', (snapshot) => {
-        const realestate = snapshot.val() || {};
-        const realestatelist = Object.values(realestate);
+        const product = snapshot.val() || {};
+        const productlist = Object.values(product);
         return resolve(dispatch({
-          type: 'GET_REAL_ESTATE',
-          data: realestatelist
+          type: 'GET_PRODUCT',
+          data: productlist
+        }));
+    })).catch(e => console.log(e)); 
+}
+
+export function filterProduct() {
+  if (Firebase === null) return () => new Promise(resolve => resolve());
+
+  return dispatch => new Promise(resolve => FirebaseRef.child('product').orderByChild('status').equalTo(true)
+    .on('value', (snapshot) => {
+        const product = snapshot.val() || {};
+        const productlist = Object.values(product);
+        return resolve(dispatch({
+          type: 'FILTER_PRODUCT',
+          data: productlist
         }));
     })).catch(e => console.log(e)); 
 }
@@ -157,35 +175,11 @@ export function getRealEstateWithFilters() {
   } 
 }
 
-export function setRealEstate(formData) {
-const {
-    id: id,
-    title: title,
-    description: description,
-    bedrooms: bedrooms,
-    bathrooms: bathrooms,
-    types_goal: types_goal,
-    images: images,
-    suites: suites,
-    vacancies: vacancies,
-    area: area,
-    cep: cep,
-    address: address,
-    number: number,
-    complement: complement,
-    uf: uf,
-    city: city,
-    neighborhood: neighborhood,
-    price: price,
-    email: email,
-    photo: photo
-  } = formData;
-
+export function setProduct(id, status) {
   return dispatch => new Promise(async (resolve, reject) => {
-    // Write the new post's data simultaneously in the posts list and the user's post list.
-    var updates = {};
-    updates['/imobi/' + id] = formData;
-    return firebase.database().ref().update(updates);
+    return firebase.database().ref('product/' + id).update({
+      status: status
+    });
   })
 }
 

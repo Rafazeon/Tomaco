@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image } from 'react-native';
 import { Container, Content, Text, Form, Item, Label, Input, Button } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import Loading from './Loading';
@@ -8,7 +7,7 @@ import Messages from './Messages';
 import Header from './Header';
 import Spacer from './Spacer';
 
-class SignUpUser extends React.Component {
+class CreateCategory extends React.Component {
   static propTypes = {
     error: PropTypes.string,
     loading: PropTypes.bool.isRequired,
@@ -22,14 +21,9 @@ class SignUpUser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      password2: '',
-      imobi: '',
+      value: '',
       image: '',
-      role: 'User'
+      price: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -45,7 +39,7 @@ class SignUpUser extends React.Component {
 
   handleSubmit = () => {
     this.props.onFormSubmit(this.state)
-      .then(() => Actions.login())
+      .then(() => Actions.profile())
       .catch(e => console.log(`Error: ${e}`));
   }
 
@@ -58,41 +52,11 @@ class SignUpUser extends React.Component {
     return (
       <Container>
         <Content padder>
-          <Header
-            title="Bem Vindo"
-            content="Faça seu registro aqui"
-          />
-
-          {error && <Messages message={error} />}
-
+        
           <Form>
             <Item stackedLabel>
               <Label>Nome</Label>
-              <Input onChangeText={v => this.handleChange('firstName', v)} />
-            </Item>
-
-            <Item stackedLabel>
-              <Label>Sobrenome</Label>
-              <Input onChangeText={v => this.handleChange('lastName', v)} />
-            </Item>
-
-            <Item stackedLabel>
-              <Label>Email</Label>
-              <Input
-                autoCapitalize="none"
-                keyboardType="email-address"
-                onChangeText={v => this.handleChange('email', v)}
-              />
-            </Item>
-
-            <Item stackedLabel>
-              <Label>Senha</Label>
-              <Input secureTextEntry onChangeText={v => this.handleChange('password', v)} />
-            </Item>
-
-            <Item stackedLabel>
-              <Label>Confirmar Senha</Label>
-              <Input secureTextEntry onChangeText={v => this.handleChange('password2', v)} />
+              <Input onChangeText={v => this.handleChange('value', v)} />
             </Item>
 
             <Spacer size={20} />
@@ -107,4 +71,4 @@ class SignUpUser extends React.Component {
   }
 }
 
-export default SignUpUser;
+export default CreateCategory;

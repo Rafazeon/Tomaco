@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
 
-import { getRealEstateWithFilters, setError, setRealEstate, getRealEstate, getRealEstateMap, cleanRealEstateMap } from '../actions/real-estate';
+import { getRealEstateWithFilters, setError, setRealEstate, getRealEstate, getRealEstateMap, cleanRealEstateMap } from '../actions/products';
 import { getEmployee, getMemberData } from '../actions/member';
 import { getFavorite } from '../actions/favorite';
 
