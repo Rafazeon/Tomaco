@@ -42,6 +42,8 @@ export function signUp(formData) {
         if (res && res.uid) {
           FirebaseRef.child(`users/${res.uid}`).set({
             firstName,
+            password,
+            password2,
             dap,
             date,
             image,
@@ -181,14 +183,20 @@ export function resetPassword(formData) {
   */
 export function updateProfile(formData) {
   const {
-    email,
+    firstName,
     password,
     password2,
-    firstName,
-    lastName,
-    changeEmail,
-    changePassword,
-    image
+    dap,
+    date,
+    image,
+    role,
+    car,
+    licence,
+    cep,
+    city,
+    email,
+    cpf,
+    cnpj
   } = formData;
 
   return dispatch => new Promise(async (resolve, reject) => {

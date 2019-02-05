@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Image } from 'react-native';
 import { Container, Content, Text, Form, Item, Label, Input, Button } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import Messages from './Messages';
 import Header from './Header';
 import Spacer from './Spacer';
 import * as firebase from 'firebase';
@@ -98,7 +97,7 @@ class SignUp extends React.Component {
       [name]: val,
     });
     if(this.state.cpf) {
-      this.setState({role: 'User'})
+      this.setState({role: 'Employee'})
     }else{
       this.setState({role: 'Employee'})
     }
@@ -147,8 +146,7 @@ class SignUp extends React.Component {
                     onChangeText={(formatted, extracted) => {
                         this.handleChange(selectedButton == 'CPF' ? 'cpf' : 'cnpj', extracted)
                     }}
-                    mask={selectedButton == 'CPF' ? '[000].[000].[000]-[00]' : '[00].[000].[000]/[0000].[00]' }  />
-              <Input  /> 
+                    mask={selectedButton == 'CPF' ? '[000].[000].[000]-[00]' : '[00].[000].[000]/[0000].[00]' }  /> 
             </Item>
               
             

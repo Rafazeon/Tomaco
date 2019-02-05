@@ -18,14 +18,14 @@ const Profile = ({ member, logout, updateRealEstate }) => (
               />
             </Content>
 
-            <ListItem onPress={Actions.updateProfile} icon>
+            {/* <ListItem onPress={Actions.updateProfile} icon>
               <Left>
                 <Icon name="person-add" />
               </Left>
               <Body>
                 <Text>Atualizar Perfil</Text>
               </Body>
-            </ListItem>
+            </ListItem> */}
 
             <ListItem onPress={logout} icon>
               <Left>

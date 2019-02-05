@@ -13,20 +13,12 @@ import ImagePicker from 'react-native-image-crop-picker';
 
 class UpdateProfile extends React.Component {
   static propTypes = {
-    error: PropTypes.string,
-    success: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
     onFormSubmit: PropTypes.func.isRequired,
     member: PropTypes.shape({
       firstName: PropTypes.string,
       lastName: PropTypes.string,
       email: PropTypes.string,
     }).isRequired,
-  }
-
-  static defaultProps = {
-    error: null,
-    success: null,
   }
 
   constructor(props) {
@@ -92,7 +84,6 @@ class UpdateProfile extends React.Component {
   }
 
   handleSubmit = () => {
-    console.log(this.state)
     this.props.onFormSubmit(this.state)
       .then(() => console.log('Perfil Atualizado'))
       .then(Actions.login())
@@ -101,17 +92,9 @@ class UpdateProfile extends React.Component {
   
 
   render() {
-    const { loading, error, success } = this.props;
-
-    // Loading
-    if (loading) return <Loading />;
-
     return (
       <Container>
         <Content padder>
-          {error && <Messages message={error} />}
-          {success && <Messages message={success} type="success" />}
-
           <Form>
           {this.state.image ? 
             <Image
